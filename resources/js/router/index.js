@@ -10,15 +10,21 @@ import AdminLawyersIndex from "../views/admin/lawyers/index"
 import AdminLawyersCreate from "../views/admin/lawyers/create"
 import AdminLawyersEdit from "../views/admin/lawyers/edit"
 import AdminTraineesIndex from "../views/admin/trainees/index"
-import adminPermanencesIndex from "../views/admin/permanences/index"
+import AdminPermanencesIndex from "../views/admin/permanences/index"
 // import AdminUsersIndex from "../views/admin/users/index";
 // import AdminUsersCreate from "../views/admin/users/create";
 // import AdminUsersEdit from "../views/admin/users/edit";
 // import AdminLawyers from "../views/admin/lawyers";
+import Permanences from "../views/permanences"
 
 const router = new VueRouter({
     mode: "history",
     routes: [
+        {
+            path: "/permanences",
+            name: "permanences",
+            component: Permanences
+        },
         {
             path: "/admin",
             name: "adminLayout",
@@ -59,7 +65,7 @@ const router = new VueRouter({
                 {
                     path: "permanences",
                     name: "adminPermanencesIndex",
-                    component: adminPermanencesIndex
+                    component: AdminPermanencesIndex
                 }
             ]
         }

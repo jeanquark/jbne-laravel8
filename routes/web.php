@@ -20,6 +20,7 @@ Route::get('/', function () {
 Route::get('/permanences', function () {
     return view('permanences');
 });
+// Route::get('/permanences', [App\Http\Controllers\PermanencesController::class, 'index'])->where('any', '.*');
 
 Route::group(['middleware' => ['role:lawyer']], function () {
     Route::get('/about', function () {

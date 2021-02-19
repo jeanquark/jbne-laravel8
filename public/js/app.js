@@ -2335,6 +2335,222 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2358,105 +2574,358 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "AdminPermanencesIndex",
+  created: function created() {
+    var _this = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return _this.$store.dispatch("calendars/fetchCalendars", {
+                year: _this.year,
+                quarter: _this.quarter
+              });
+
+            case 3:
+              _context.next = 5;
+              return _this.$store.dispatch("permanences/fetchPermanences", {
+                year: _this.year,
+                quarter: _this.quarter
+              });
+
+            case 5:
+              _context.next = 10;
+              break;
+
+            case 7:
+              _context.prev = 7;
+              _context.t0 = _context["catch"](0);
+              console.log("error: ", _context.t0);
+
+            case 10:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[0, 7]]);
+    }))();
+  },
   data: function data() {
     return {
-      headers: [{
-        text: "Dessert (100g serving)",
-        align: "start",
-        sortable: false,
-        value: "name"
-      }, {
-        text: "Calories",
-        value: "calories"
-      }, {
-        text: "Fat (g)",
-        value: "fat"
-      }, {
-        text: "Carbs (g)",
-        value: "carbs"
-      }, {
-        text: "Protein (g)",
-        value: "protein"
-      }, {
-        text: "Iron (%)",
-        value: "iron"
-      }],
-      desserts: [{
-        name: "Frozen Yogurt",
-        calories: 159,
-        fat: 6.0,
-        carbs: 24,
-        protein: 4.0,
-        iron: "1%"
-      }, {
-        name: "Ice cream sandwich",
-        calories: 237,
-        fat: 9.0,
-        carbs: 37,
-        protein: 4.3,
-        iron: "1%"
-      }, {
-        name: "Eclair",
-        calories: 262,
-        fat: 16.0,
-        carbs: 23,
-        protein: 6.0,
-        iron: "7%"
-      }, {
-        name: "Cupcake",
-        calories: 305,
-        fat: 3.7,
-        carbs: 67,
-        protein: 4.3,
-        iron: "8%"
-      }, {
-        name: "Gingerbread",
-        calories: 356,
-        fat: 16.0,
-        carbs: 49,
-        protein: 3.9,
-        iron: "16%"
-      }, {
-        name: "Jelly bean",
-        calories: 375,
-        fat: 0.0,
-        carbs: 94,
-        protein: 0.0,
-        iron: "0%"
-      }, {
-        name: "Lollipop",
-        calories: 392,
-        fat: 0.2,
-        carbs: 98,
-        protein: 0,
-        iron: "2%"
-      }, {
-        name: "Honeycomb",
-        calories: 408,
-        fat: 3.2,
-        carbs: 87,
-        protein: 6.5,
-        iron: "45%"
-      }, {
-        name: "Donut",
-        calories: 452,
-        fat: 25.0,
-        carbs: 51,
-        protein: 4.9,
-        iron: "22%"
-      }, {
-        name: "KitKat",
-        calories: 518,
-        fat: 26.0,
-        carbs: 65,
-        protein: 7,
-        iron: "6%"
-      }]
+      // headers: [],
+      year: 2020,
+      quarter: 1,
+      // active: "0",
+      // nestedActive: ["0", "0", "0"],
+      years: [2020, 2021],
+      // quarters: ['Semestre I', 'Semestre II', 'Semestre III', 'Semestre IV'],
+      quarters: [1, 2, 3, 4] // selectedYear: null,
+      // yearTab: null
+
     };
   },
+  computed: {
+    calendars: function calendars() {
+      try {
+        console.log("calendars: year quarter: ", this.year, this.quarter);
+        return this.$store.getters["calendars/calendars"][this.year][this.quarter];
+      } catch (error) {
+        return {};
+      }
+    },
+    permanences: function permanences() {
+      try {
+        return this.$store.getters["permanences/permanences"][this.year][this.quarter];
+      } catch (error) {
+        return {};
+      }
+    },
+    headers: function headers() {
+      var headers = [];
+      headers.push({
+        text: "Avocat",
+        value: "user.name"
+      });
+
+      if (this.calendars && this.calendars.length) {
+        for (var i = 0; i < this.calendars.length; i++) {
+          for (var j = 1; j <= 5; j++) {
+            if (this.calendars[i]["week".concat(j, "_nb")]) {
+              headers.push({
+                text: "S" + this.calendars[i]["week".concat(j, "_nb")],
+                value: "week".concat(this.calendars[i]["week".concat(j, "_nb")]),
+                tooltip: this.calendars[i]["week".concat(j)]
+              });
+            }
+          }
+        }
+      }
+
+      return headers;
+    },
+    data: function data() {
+      var object = {};
+
+      if (this.permanences && this.permanences.length) {
+        for (var i = 0; i < this.permanences.length; i++) {
+          if (!object[this.permanences[i]["user_id"]]) {
+            object[this.permanences[i]["user_id"]] = {};
+            object[this.permanences[i]["user_id"]]["user"] = this.permanences[i]["user"];
+          }
+
+          object[this.permanences[i]["user_id"]]["week".concat(this.permanences[i]["week1_nb"])] = {
+            // (object[this.permanences[i]["user_id"]]['week1'] = {
+            permanence_id: this.permanences[i]["id"],
+            week_nb_in_year: this.permanences[i]["week1_nb"],
+            week_nb_in_month: 1,
+            dispo: this.permanences[i]["week1_dispo"],
+            attr: this.permanences[i]["week1_attr"]
+          }, object[this.permanences[i]["user_id"]]["week".concat(this.permanences[i]["week2_nb"])] = {
+            permanence_id: this.permanences[i]["id"],
+            week_nb_in_year: this.permanences[i]["week2_nb"],
+            week_nb_in_month: 2,
+            dispo: this.permanences[i]["week2_dispo"],
+            attr: this.permanences[i]["week2_attr"]
+          }, object[this.permanences[i]["user_id"]]["week".concat(this.permanences[i]["week3_nb"])] = {
+            permanence_id: this.permanences[i]["id"],
+            week_nb_in_year: this.permanences[i]["week3_nb"],
+            week_nb_in_month: 3,
+            dispo: this.permanences[i]["week3_dispo"],
+            attr: this.permanences[i]["week3_attr"]
+          }, object[this.permanences[i]["user_id"]]["week".concat(this.permanences[i]["week4_nb"])] = {
+            permanence_id: this.permanences[i]["id"],
+            week_nb_in_year: this.permanences[i]["week4_nb"],
+            week_nb_in_month: 4,
+            dispo: this.permanences[i]["week4_dispo"],
+            attr: this.permanences[i]["week4_attr"]
+          };
+
+          if (this.permanences[i]["week5_nb"]) {
+            object[this.permanences[i]["user_id"]]["week".concat(this.permanences[i]["week5_nb"])] = {
+              permanence_id: this.permanences[i]["id"],
+              week_nb_in_year: this.permanences[i]["week5_nb"],
+              week_nb_in_month: 5,
+              dispo: this.permanences[i]["week5_dispo"],
+              attr: this.permanences[i]["week5_attr"]
+            };
+          } // Display last updated row in the quarter for a particular user
+
+
+          if (!object[this.permanences[i]["user_id"]]["updated_at"] || object[this.permanences[i]["user_id"]]["updated_at"] < this.permanences[i]["updated_at"]) {
+            object[this.permanences[i]["user_id"]]["updated_at"] = this.permanences[i]["updated_at"];
+          }
+        }
+      }
+
+      console.log("object: ", object);
+      return Object.keys(object).map(function (k) {
+        return object[k];
+      });
+    }
+  },
   methods: {
-    getColor: function getColor(calories) {
-      if (calories > 400) return "red";else if (calories > 200) return "orange";else return "green";
+    updateStatus: function updateStatus(data) {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var permanenceId, week_nb_in_year, week_nb_in_month, action, updatedPermanence;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                console.log("updateStatus: ", data); // return
+
+                permanenceId = data.permanenceId, week_nb_in_year = data.week_nb_in_year, week_nb_in_month = data.week_nb_in_month, action = data.action;
+                updatedPermanence = {};
+                _context2.t0 = action;
+                _context2.next = _context2.t0 === "remove_attr" ? 7 : _context2.t0 === "remove_dispo" ? 10 : _context2.t0 === "add_dispo" ? 13 : 16;
+                break;
+
+              case 7:
+                updatedPermanence["week".concat(week_nb_in_month, "_dispo")] = 1;
+                updatedPermanence["week".concat(week_nb_in_month, "_attr")] = 0;
+                return _context2.abrupt("break", 16);
+
+              case 10:
+                updatedPermanence["week".concat(week_nb_in_month, "_dispo")] = 0;
+                updatedPermanence["week".concat(week_nb_in_month, "_attr")] = 0;
+                return _context2.abrupt("break", 16);
+
+              case 13:
+                updatedPermanence["week".concat(week_nb_in_month, "_dispo")] = 1;
+                updatedPermanence["week".concat(week_nb_in_month, "_attr")] = 1;
+                return _context2.abrupt("break", 16);
+
+              case 16:
+                console.log("updatedPermanence: ", updatedPermanence); // return;
+
+                _context2.next = 19;
+                return _this2.$store.dispatch("permanences/updatePermanence", {
+                  year: _this2.year,
+                  quarter: _this2.quarter,
+                  permanenceId: permanenceId,
+                  updatedPermanence: updatedPermanence
+                });
+
+              case 19:
+                _context2.next = 24;
+                break;
+
+              case 21:
+                _context2.prev = 21;
+                _context2.t1 = _context2["catch"](0);
+                console.log("error");
+
+              case 24:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, null, [[0, 21]]);
+      }))();
+    },
+    calcAttrByWeek: function calcAttrByWeek(item) {
+      try {
+        // console.log('calcAttrByWeek: ', item)
+        // return 0
+        return this.data.map(function (permanence) {
+          return permanence[item.value];
+        }).reduce(function (a, b) {
+          return a + (parseInt(b["attr"]) || 0);
+        }, 0);
+      } catch (error) {
+        console.log('error: ', error);
+        return "NaN";
+      }
+    },
+    calcAttrByUser: function calcAttrByUser(item, index) {
+      try {
+        var sum = 0;
+        Object.entries(this.data[index]).forEach(function (_ref) {
+          var _ref2 = _slicedToArray(_ref, 2),
+              key = _ref2[0],
+              value = _ref2[1];
+
+          sum += parseInt(value["attr"]) || 0;
+        });
+        return sum;
+      } catch (error) {
+        return "NaN";
+      }
+    },
+    calcDispoByUser: function calcDispoByUser(item, index) {
+      try {
+        var sum = 0;
+        Object.entries(this.data[index]).forEach(function (_ref3) {
+          var _ref4 = _slicedToArray(_ref3, 2),
+              key = _ref4[0],
+              value = _ref4[1];
+
+          sum += parseInt(value["dispo"]) || 0;
+        });
+        return sum;
+      } catch (error) {
+        return "NaN";
+      }
+    },
+    switchYear: function switchYear(index) {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.prev = 0;
+                console.log("switchYear: ", index);
+                _this3.year = _this3.years[index];
+
+                if (_this3.calendars[_this3.year]) {
+                  _context3.next = 6;
+                  break;
+                }
+
+                _context3.next = 6;
+                return _this3.$store.dispatch("calendars/fetchCalendars", {
+                  year: _this3.year,
+                  quarter: _this3.quarter
+                });
+
+              case 6:
+                if (_this3.permanences[_this3.year]) {
+                  _context3.next = 9;
+                  break;
+                }
+
+                _context3.next = 9;
+                return _this3.$store.dispatch("permanences/fetchPermanences", {
+                  year: _this3.year,
+                  quarter: _this3.quarter
+                });
+
+              case 9:
+                _context3.next = 14;
+                break;
+
+              case 11:
+                _context3.prev = 11;
+                _context3.t0 = _context3["catch"](0);
+                console.log("error: ", _context3.t0);
+
+              case 14:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, null, [[0, 11]]);
+      }))();
+    },
+    switchQuarter: function switchQuarter(index) {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.prev = 0;
+                console.log("switchQuarter: ", index); // this.year = this.years[index];
+
+                _this4.quarter = _this4.quarters[index]; // if (!this.calendars[this.year] && !this.calendars[this.year][this.quarter]) {
+
+                _context4.next = 5;
+                return _this4.$store.dispatch("calendars/fetchCalendars", {
+                  year: _this4.year,
+                  quarter: _this4.quarter
+                });
+
+              case 5:
+                _context4.next = 7;
+                return _this4.$store.dispatch("permanences/fetchPermanences", {
+                  year: _this4.year,
+                  quarter: _this4.quarter
+                });
+
+              case 7:
+                _context4.next = 12;
+                break;
+
+              case 9:
+                _context4.prev = 9;
+                _context4.t0 = _context4["catch"](0);
+                console.log("error: ", _context4.t0);
+
+              case 12:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, null, [[0, 9]]);
+      }))();
     }
   }
 });
@@ -2484,6 +2953,65 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/permanences.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/permanences.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// import moment from 'moment'
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "permanences",
+  data: function data() {
+    return {
+      date: '',
+      dates: []
+    };
+  },
+  methods: {
+    selectDate: function selectDate(values, index) {
+      console.log('selectDate: ', values, index);
+      var day = values[values.length - 1];
+      var dayOfWeek = new Date(day).getDay();
+      console.log('day: ', day);
+      console.log('dayOfWeek: ', dayOfWeek);
+
+      switch (dayOfWeek) {
+        case 1:
+          console.log('case 1'); // console.log(moment(day, 'YYYY-MM-DD').add(1, 'days'))
+          // dates.add('')
+
+          break;
+
+        default:
+          break;
+      }
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -2499,7 +3027,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _router_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./router/index */ "./resources/js/router/index.js");
 /* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store/index */ "./resources/js/store/index.js");
 /* harmony import */ var _vuetify__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./vuetify */ "./resources/js/vuetify/index.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_5__);
 
@@ -2507,12 +3034,6 @@ __webpack_require__.r(__webpack_exports__);
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
@@ -2525,7 +3046,11 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 vue__WEBPACK_IMPORTED_MODULE_6__.default.component("example-component", __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue").default);
-vue__WEBPACK_IMPORTED_MODULE_6__.default.component("login-component", __webpack_require__(/*! ./components/LoginComponent.vue */ "./resources/js/components/LoginComponent.vue").default);
+vue__WEBPACK_IMPORTED_MODULE_6__.default.component("login-component", __webpack_require__(/*! ./components/LoginComponent.vue */ "./resources/js/components/LoginComponent.vue").default); // Vue.component(
+//     "permanences",
+//     require("./components/PermanencesComponent.vue").default
+// );
+
 var app = new vue__WEBPACK_IMPORTED_MODULE_6__.default({
   el: "#app",
   router: _router_index__WEBPACK_IMPORTED_MODULE_2__.default,
@@ -2535,8 +3060,8 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_6__.default({
     App: _views_App__WEBPACK_IMPORTED_MODULE_1__.default
   },
   created: function created() {
-    console.log("created()");
-    this.$store.commit("INCREMENT");
+    console.log("created()"); // this.$store.commit("INCREMENT");
+
     console.log("count: ", this.count);
   },
   mounted: function mounted() {},
@@ -2544,11 +3069,10 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_6__.default({
     return {// count: 0
     };
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_7__.mapState)({
-    count: function count(state) {
-      return state.count;
-    }
-  })),
+  computed: {// ...mapState({
+    //     count: state => state.count
+    // })
+  },
   methods: {
     register: function register() {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
@@ -2558,7 +3082,7 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_6__.default({
             switch (_context.prev = _context.next) {
               case 0:
                 _context.prev = 0;
-                console.log('register');
+                console.log("register");
                 _context.next = 4;
                 return axios__WEBPACK_IMPORTED_MODULE_5___default().post("/register", {
                   name: "John Doe",
@@ -2569,14 +3093,14 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_6__.default({
 
               case 4:
                 data = _context.sent;
-                console.log('data: ', data);
+                console.log("data: ", data);
                 _context.next = 11;
                 break;
 
               case 8:
                 _context.prev = 8;
                 _context.t0 = _context["catch"](0);
-                console.log('error: ', _context.t0);
+                console.log("error: ", _context.t0);
 
               case 11:
               case "end":
@@ -2724,8 +3248,7 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_6__.default({
       }))();
     },
     incrementCounter: function incrementCounter() {
-      console.log("incrementCounter");
-      this.$store.commit("INCREMENT");
+      console.log("incrementCounter"); // this.$store.commit("INCREMENT");
     }
   }
 });
@@ -2785,6 +3308,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _views_admin_lawyers_edit__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../views/admin/lawyers/edit */ "./resources/js/views/admin/lawyers/edit.vue");
 /* harmony import */ var _views_admin_trainees_index__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../views/admin/trainees/index */ "./resources/js/views/admin/trainees/index.vue");
 /* harmony import */ var _views_admin_permanences_index__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../views/admin/permanences/index */ "./resources/js/views/admin/permanences/index.vue");
+/* harmony import */ var _views_permanences__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../views/permanences */ "./resources/js/views/permanences.vue");
 
 
 vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vue_router__WEBPACK_IMPORTED_MODULE_1__.default);
@@ -2801,9 +3325,14 @@ vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vue_router__WEBPACK_IMPORTED_MODULE
 // import AdminUsersEdit from "../views/admin/users/edit";
 // import AdminLawyers from "../views/admin/lawyers";
 
+
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__.default({
   mode: "history",
   routes: [{
+    path: "/permanences",
+    name: "permanences",
+    component: _views_permanences__WEBPACK_IMPORTED_MODULE_10__.default
+  }, {
     path: "/admin",
     name: "adminLayout",
     component: _views_admin_layout__WEBPACK_IMPORTED_MODULE_2__.default,
@@ -2886,27 +3415,284 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.common.js");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuex__WEBPACK_IMPORTED_MODULE_1__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+// import Vue from 'vue'
+// import Vuex from 'vuex'
+// Vue.use(Vuex)
+// const store = new Vuex.Store({
+//     state: {
+//         count: 0,
+//         lawyers: [
+//             {
+//                 name: 'Cyril'
+//             },
+//             {
+//                 name: 'Olivier'
+//             }
+//         ]
+//     },
+//     mutations: {
+//         INCREMENT(state) {
+//             console.log('INCREMENT mutations')
+//             state.count++
+//         }
+//     },
+//     actions: {}
+// })
+// export default store
 
 
-vue__WEBPACK_IMPORTED_MODULE_0__.default.use((vuex__WEBPACK_IMPORTED_MODULE_1___default()));
-var store = new (vuex__WEBPACK_IMPORTED_MODULE_1___default().Store)({
-  state: {
-    count: 0,
-    lawyers: [{
-      name: 'Cyril'
-    }, {
-      name: 'Olivier'
-    }]
-  },
-  mutations: {
-    INCREMENT: function INCREMENT(state) {
-      console.log('INCREMENT mutations');
-      state.count++;
+vue__WEBPACK_IMPORTED_MODULE_0__.default.use((vuex__WEBPACK_IMPORTED_MODULE_1___default())); // Load store modules dynamically.
+
+var requireContext = __webpack_require__("./resources/js/store/modules sync .*\\.js$");
+
+var modules = requireContext.keys().map(function (file) {
+  return [file.replace(/(^.\/)|(\.js$)/g, ""), requireContext(file)];
+}).reduce(function (modules, _ref) {
+  var _ref2 = _slicedToArray(_ref, 2),
+      name = _ref2[0],
+      module = _ref2[1];
+
+  if (module.namespaced === undefined) {
+    module.namespaced = true;
+  }
+
+  return _objectSpread(_objectSpread({}, modules), {}, _defineProperty({}, name, module));
+}, {});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new (vuex__WEBPACK_IMPORTED_MODULE_1___default().Store)({
+  modules: modules
+}));
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/calendars.js":
+/*!*************************************************!*\
+  !*** ./resources/js/store/modules/calendars.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "state": () => /* binding */ state,
+/* harmony export */   "mutations": () => /* binding */ mutations,
+/* harmony export */   "actions": () => /* binding */ actions,
+/* harmony export */   "getters": () => /* binding */ getters
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+var state = function state() {
+  return {
+    calendars: {}
+  };
+};
+var mutations = {
+  SET_CALENDARS: function SET_CALENDARS(state, payload) {
+    var year = payload.year,
+        quarter = payload.quarter,
+        data = payload.data; // state.calendars = payload
+
+    if (!state.calendars[year]) {
+      vue__WEBPACK_IMPORTED_MODULE_1__.default.set(state.calendars, year, {});
     }
+
+    if (!state.calendars[year][quarter]) {
+      vue__WEBPACK_IMPORTED_MODULE_1__.default.set(state.calendars[year], quarter, {});
+    }
+
+    state.calendars[year][quarter] = data[year][quarter];
+  }
+};
+var actions = {
+  fetchCalendars: function fetchCalendars(_ref, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      var commit, year, quarter, _yield$axios$get, data;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              commit = _ref.commit;
+              console.log('[VUEX] fetchCalendars: ', payload);
+              year = payload.year, quarter = payload.quarter;
+              _context.next = 5;
+              return axios.get("/api/v1/calendars?year=".concat(year, "&quarter=").concat(quarter));
+
+            case 5:
+              _yield$axios$get = _context.sent;
+              data = _yield$axios$get.data;
+              console.log('data: ', data);
+              commit('SET_CALENDARS', {
+                year: year,
+                quarter: quarter,
+                data: data
+              });
+
+            case 9:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  }
+};
+var getters = {
+  calendars: function calendars(state) {
+    return state.calendars;
+  }
+};
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/permanences.js":
+/*!***************************************************!*\
+  !*** ./resources/js/store/modules/permanences.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "state": () => /* binding */ state,
+/* harmony export */   "mutations": () => /* binding */ mutations,
+/* harmony export */   "actions": () => /* binding */ actions,
+/* harmony export */   "getters": () => /* binding */ getters
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+var state = function state() {
+  return {
+    permanences: {}
+  };
+};
+var mutations = {
+  SET_PERMANENCES: function SET_PERMANENCES(state, payload) {
+    // console.log("SET_PERMANENCES vuex: ", payload);
+    var year = payload.year,
+        quarter = payload.quarter,
+        data = payload.data;
+    console.log("year: ", year);
+    console.log("quarter: ", quarter);
+    console.log("data: ", data);
+
+    if (!state.permanences[year]) {
+      vue__WEBPACK_IMPORTED_MODULE_1__.default.set(state.permanences, year, {});
+    }
+
+    if (!state.permanences[year][quarter]) {
+      vue__WEBPACK_IMPORTED_MODULE_1__.default.set(state.permanences[year], quarter, {});
+    }
+
+    state.permanences[year][quarter] = data[year][quarter];
+  }
+};
+var actions = {
+  fetchPermanences: function fetchPermanences(_ref, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      var commit, year, quarter, _yield$axios$get, data;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              commit = _ref.commit;
+              console.log("[VUEX] fetchPermanences: ", payload);
+              year = payload.year, quarter = payload.quarter;
+              _context.next = 5;
+              return axios.get("/api/v1/permanences?year=".concat(year, "&quarter=").concat(quarter));
+
+            case 5:
+              _yield$axios$get = _context.sent;
+              data = _yield$axios$get.data;
+              console.log("data: ", data);
+              commit("SET_PERMANENCES", {
+                year: year,
+                quarter: quarter,
+                data: data
+              });
+
+            case 9:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
   },
-  actions: {}
-});
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
+  updatePermanence: function updatePermanence(_ref2, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      var commit, dispatch, year, quarter, permanenceId, updatedPermanence, _yield$axios$put, data;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              commit = _ref2.commit, dispatch = _ref2.dispatch;
+              console.log("[VUEX] updatePermanence ", payload);
+              year = payload.year, quarter = payload.quarter, permanenceId = payload.permanenceId, updatedPermanence = payload.updatedPermanence; // const abc = { week_attr: 1 }
+
+              console.log("updatedPermanence vuex: ", updatedPermanence);
+              _context2.next = 6;
+              return axios.put("/api/v1/permanences/".concat(permanenceId), updatedPermanence);
+
+            case 6:
+              _yield$axios$put = _context2.sent;
+              data = _yield$axios$put.data;
+              console.log("data: ", data); // commit('SET_PERMANENCE', data)
+
+              dispatch("fetchPermanences", {
+                year: year,
+                quarter: quarter
+              });
+
+            case 10:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
+  }
+};
+var getters = {
+  permanences: function permanences(state) {
+    return state.permanences;
+  }
+};
 
 /***/ }),
 
@@ -22137,6 +22923,45 @@ component.options.__file = "resources/js/views/admin/trainees/index.vue"
 
 /***/ }),
 
+/***/ "./resources/js/views/permanences.vue":
+/*!********************************************!*\
+  !*** ./resources/js/views/permanences.vue ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _permanences_vue_vue_type_template_id_6df4185c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./permanences.vue?vue&type=template&id=6df4185c&scoped=true& */ "./resources/js/views/permanences.vue?vue&type=template&id=6df4185c&scoped=true&");
+/* harmony import */ var _permanences_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./permanences.vue?vue&type=script&lang=js& */ "./resources/js/views/permanences.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _permanences_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _permanences_vue_vue_type_template_id_6df4185c_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _permanences_vue_vue_type_template_id_6df4185c_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "6df4185c",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/views/permanences.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************!*\
   !*** ./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js& ***!
@@ -22310,6 +23135,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/admin/trainees/index.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
+/***/ "./resources/js/views/permanences.vue?vue&type=script&lang=js&":
+/*!*********************************************************************!*\
+  !*** ./resources/js/views/permanences.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_permanences_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./permanences.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/permanences.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_permanences_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
 
 /***/ }),
 
@@ -22509,6 +23350,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => /* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_5ad62066_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_5ad62066_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./index.vue?vue&type=template&id=5ad62066&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/admin/trainees/index.vue?vue&type=template&id=5ad62066&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/views/permanences.vue?vue&type=template&id=6df4185c&scoped=true&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/views/permanences.vue?vue&type=template&id=6df4185c&scoped=true& ***!
+  \***************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_permanences_vue_vue_type_template_id_6df4185c_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+/* harmony export */   "staticRenderFns": () => /* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_permanences_vue_vue_type_template_id_6df4185c_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_permanences_vue_vue_type_template_id_6df4185c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./permanences.vue?vue&type=template&id=6df4185c&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/permanences.vue?vue&type=template&id=6df4185c&scoped=true&");
 
 
 /***/ }),
@@ -22999,39 +23857,476 @@ var render = function() {
     { attrs: { "no-gutters": "" } },
     [
       _c("v-col", { attrs: { cols: "12" } }, [
-        _c("h1", [_vm._v("Permanences")])
+        _c("h1", [_vm._v("Permanences")]),
+        _vm._v("\n        year: " + _vm._s(_vm.year)),
+        _c("br"),
+        _c("br"),
+        _vm._v("\n        quarter: " + _vm._s(_vm.quarter)),
+        _c("br"),
+        _c("br"),
+        _vm._v("\n        years: " + _vm._s(_vm.years)),
+        _c("br"),
+        _c("br")
       ]),
+      _vm._v(" "),
+      _c("br"),
+      _c("br"),
       _vm._v(" "),
       _c(
         "v-col",
         { attrs: { cols: "12" } },
         [
+          _c(
+            "v-tabs",
+            { attrs: { color: "primary", "slider-color": "yellow" } },
+            [
+              _vm._l(_vm.years.length, function(i) {
+                return _c(
+                  "v-tab",
+                  {
+                    key: i,
+                    attrs: { ripple: "" },
+                    on: {
+                      click: function($event) {
+                        return _vm.switchYear(i - 1)
+                      }
+                    }
+                  },
+                  [_vm._v(_vm._s(_vm.years[i - 1]))]
+                )
+              }),
+              _vm._v(" "),
+              _vm._l(_vm.years.length, function(n) {
+                return _c(
+                  "v-tab-item",
+                  { key: n, attrs: { lazy: "" } },
+                  [
+                    _c(
+                      "v-card",
+                      { attrs: { flat: "" } },
+                      [
+                        _c(
+                          "v-tabs",
+                          {
+                            attrs: {
+                              color: "secondary",
+                              "slider-color": "yellow"
+                            }
+                          },
+                          _vm._l(_vm.quarters.length, function(j) {
+                            return _c(
+                              "v-tab",
+                              {
+                                key: j,
+                                on: {
+                                  click: function($event) {
+                                    return _vm.switchQuarter(j - 1)
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                            Trimestre " +
+                                    _vm._s(_vm.quarters[j - 1]) +
+                                    "\n                        "
+                                )
+                              ]
+                            )
+                          }),
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              })
+            ],
+            2
+          ),
+          _vm._v(" "),
           _c("v-data-table", {
             staticClass: "elevation-1",
-            attrs: { headers: _vm.headers, items: _vm.desserts },
-            scopedSlots: _vm._u([
-              {
-                key: "item.calories",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    _c(
-                      "v-chip",
-                      {
-                        attrs: { color: _vm.getColor(item.calories), dark: "" }
-                      },
-                      [
-                        _vm._v(
-                          "\n                    " +
-                            _vm._s(item.calories) +
-                            "\n                "
+            attrs: {
+              headers: _vm.headers,
+              items: _vm.data,
+              "hide-default-header": true
+            },
+            scopedSlots: _vm._u(
+              [
+                {
+                  key: "header",
+                  fn: function(ref) {
+                    var props = ref.props
+                    return [
+                      _c("thead", [
+                        _c(
+                          "tr",
+                          [
+                            _vm._l(props.headers, function(head, index) {
+                              return _c(
+                                "th",
+                                { key: index, staticClass: "text-center" },
+                                [
+                                  _c(
+                                    "v-tooltip",
+                                    {
+                                      attrs: { top: "" },
+                                      scopedSlots: _vm._u(
+                                        [
+                                          {
+                                            key: "activator",
+                                            fn: function(ref) {
+                                              var on = ref.on
+                                              var attrs = ref.attrs
+                                              return [
+                                                _c(
+                                                  "span",
+                                                  _vm._g(
+                                                    _vm._b(
+                                                      {},
+                                                      "span",
+                                                      attrs,
+                                                      false
+                                                    ),
+                                                    on
+                                                  ),
+                                                  [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        head.text.toUpperCase()
+                                                      )
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            }
+                                          }
+                                        ],
+                                        null,
+                                        true
+                                      )
+                                    },
+                                    [
+                                      _vm._v(" "),
+                                      _c("span", [_vm._v(_vm._s(head.tooltip))])
+                                    ]
+                                  )
+                                ],
+                                1
+                              )
+                            }),
+                            _vm._v(" "),
+                            _c("th", [
+                              _vm._v(
+                                "\n                            Total dispo\n                        "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("th", [
+                              _vm._v(
+                                "\n                            Total attr\n                        "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("th", [
+                              _vm._v(
+                                "\n                            Dernière modification\n                        "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("th", [
+                              _vm._v(
+                                "\n                            Actions\n                        "
+                              )
+                            ])
+                          ],
+                          2
                         )
-                      ]
-                    )
-                  ]
+                      ])
+                    ]
+                  }
+                },
+                {
+                  key: "item",
+                  fn: function(ref) {
+                    var item = ref.item
+                    var index = ref.index
+                    return [
+                      _vm.headers && _vm.headers.length
+                        ? _c(
+                            "tr",
+                            {},
+                            [
+                              _c("td", [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(item.user.name) +
+                                    "\n                    "
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _vm._l(_vm.headers.length - 1, function(n) {
+                                return _c(
+                                  "td",
+                                  { key: n, staticClass: "text-center" },
+                                  [
+                                    _c(
+                                      "span",
+                                      [
+                                        item["" + _vm.headers[n]["value"]] &&
+                                        item["" + _vm.headers[n]["value"]][
+                                          "dispo"
+                                        ] &&
+                                        item["" + _vm.headers[n]["value"]][
+                                          "attr"
+                                        ]
+                                          ? _c(
+                                              "v-icon",
+                                              {
+                                                attrs: { color: "success" },
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.updateStatus({
+                                                      permanenceId:
+                                                        item[
+                                                          "" +
+                                                            _vm.headers[n][
+                                                              "value"
+                                                            ]
+                                                        ]["permanence_id"],
+                                                      week_nb_in_year:
+                                                        item[
+                                                          "" +
+                                                            _vm.headers[n][
+                                                              "value"
+                                                            ]
+                                                        ]["week_nb_in_year"],
+                                                      week_nb_in_month:
+                                                        item[
+                                                          "" +
+                                                            _vm.headers[n][
+                                                              "value"
+                                                            ]
+                                                        ]["week_nb_in_month"],
+                                                      action: "remove_attr"
+                                                    })
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                mdi-checkbox-marked\n                            "
+                                                )
+                                              ]
+                                            )
+                                          : item[
+                                              "" + _vm.headers[n]["value"]
+                                            ] &&
+                                            item["" + _vm.headers[n]["value"]][
+                                              "dispo"
+                                            ]
+                                          ? _c(
+                                              "v-icon",
+                                              {
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.updateStatus({
+                                                      permanenceId:
+                                                        item[
+                                                          "" +
+                                                            _vm.headers[n][
+                                                              "value"
+                                                            ]
+                                                        ]["permanence_id"],
+                                                      week_nb_in_year:
+                                                        item[
+                                                          "" +
+                                                            _vm.headers[n][
+                                                              "value"
+                                                            ]
+                                                        ]["week_nb_in_year"],
+                                                      week_nb_in_month:
+                                                        item[
+                                                          "" +
+                                                            _vm.headers[n][
+                                                              "value"
+                                                            ]
+                                                        ]["week_nb_in_month"],
+                                                      action: "remove_dispo"
+                                                    })
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                mdi-checkbox-blank-outline\n                            "
+                                                )
+                                              ]
+                                            )
+                                          : _c(
+                                              "v-icon",
+                                              {
+                                                attrs: { color: "error" },
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.updateStatus({
+                                                      permanenceId:
+                                                        item[
+                                                          "" +
+                                                            _vm.headers[n][
+                                                              "value"
+                                                            ]
+                                                        ]["permanence_id"],
+                                                      week_nb_in_year:
+                                                        item[
+                                                          "" +
+                                                            _vm.headers[n][
+                                                              "value"
+                                                            ]
+                                                        ]["week_nb_in_year"],
+                                                      week_nb_in_month:
+                                                        item[
+                                                          "" +
+                                                            _vm.headers[n][
+                                                              "value"
+                                                            ]
+                                                        ]["week_nb_in_month"],
+                                                      action: "add_dispo"
+                                                    })
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                mdi-close-circle-outline\n                            "
+                                                )
+                                              ]
+                                            )
+                                      ],
+                                      1
+                                    )
+                                  ]
+                                )
+                              }),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "text-center" }, [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(_vm.calcDispoByUser(item, index)) +
+                                    "\n                    "
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "text-center" }, [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(_vm.calcAttrByUser(item, index)) +
+                                    "\n                    "
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c("span", [_vm._v(_vm._s(item.updated_at))])
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                { staticStyle: { "white-space": "nowrap" } },
+                                [
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      attrs: { "x-small": "", color: "success" }
+                                    },
+                                    [_vm._v("Montrer")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-btn",
+                                    { attrs: { "x-small": "", color: "info" } },
+                                    [_vm._v("Editer")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      attrs: { "x-small": "", color: "error" }
+                                    },
+                                    [_vm._v("Supprimer")]
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            2
+                          )
+                        : _vm._e()
+                    ]
+                  }
+                },
+                {
+                  key: "body.append",
+                  fn: function(ref) {
+                    var headers = ref.headers
+                    return [
+                      headers && headers.length
+                        ? _c(
+                            "tr",
+                            [
+                              _c("td", { attrs: { colspan: "1" } }, [
+                                _vm._v("Total attributions")
+                              ]),
+                              _vm._v(" "),
+                              _vm._l(headers.length - 1, function(n) {
+                                return _c(
+                                  "td",
+                                  { key: n, staticClass: "text-center" },
+                                  [
+                                    _vm.calcAttrByWeek(headers[n]) === 4
+                                      ? _c(
+                                          "v-chip",
+                                          {
+                                            attrs: {
+                                              small: "",
+                                              color: "success"
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                            " +
+                                                _vm._s(
+                                                  _vm.calcAttrByWeek(headers[n])
+                                                ) +
+                                                "\n                        "
+                                            )
+                                          ]
+                                        )
+                                      : _c("v-chip", { attrs: { small: "" } }, [
+                                          _vm._v(
+                                            "\n                            " +
+                                              _vm._s(
+                                                _vm.calcAttrByWeek(headers[n])
+                                              ) +
+                                              "\n                        "
+                                          )
+                                        ])
+                                  ],
+                                  1
+                                )
+                              })
+                            ],
+                            2
+                          )
+                        : _vm._e()
+                    ]
+                  }
                 }
-              }
-            ])
+              ],
+              null,
+              true
+            )
           })
         ],
         1
@@ -23064,6 +24359,55 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("h1", [_vm._v("Trainees")])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/permanences.vue?vue&type=template&id=6df4185c&scoped=true&":
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/permanences.vue?vue&type=template&id=6df4185c&scoped=true& ***!
+  \******************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* binding */ render,
+/* harmony export */   "staticRenderFns": () => /* binding */ staticRenderFns
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("h2", [_vm._v("Permanences2")]),
+      _vm._v("\n    date: " + _vm._s(_vm.date)),
+      _c("br"),
+      _c("br"),
+      _vm._v("\n    dates: " + _vm._s(_vm.dates)),
+      _c("br"),
+      _c("br"),
+      _vm._v(" "),
+      _c("v-date-picker", {
+        attrs: { "first-day-of-week": 1, "show-week": true, multiple: true },
+        on: { input: _vm.selectDate },
+        model: {
+          value: _vm.dates,
+          callback: function($$v) {
+            _vm.dates = $$v
+          },
+          expression: "dates"
+        }
+      })
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -84202,43 +85546,36 @@ module.exports = index_cjs;
 
 /***/ }),
 
-/***/ "./node_modules/vuex/dist/vuex.mjs":
-/*!*****************************************!*\
-  !*** ./node_modules/vuex/dist/vuex.mjs ***!
-  \*****************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+/***/ "./resources/js/store/modules sync .*\\.js$":
+/*!***************************************************************!*\
+  !*** ./resources/js/store/modules/ sync nonrecursive .*\.js$ ***!
+  \***************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* reexport default export from named module */ _dist_vuex_common_js__WEBPACK_IMPORTED_MODULE_0__,
-/* harmony export */   "Store": () => /* binding */ Store,
-/* harmony export */   "install": () => /* binding */ install,
-/* harmony export */   "version": () => /* binding */ version,
-/* harmony export */   "mapState": () => /* binding */ mapState,
-/* harmony export */   "mapMutations": () => /* binding */ mapMutations,
-/* harmony export */   "mapGetters": () => /* binding */ mapGetters,
-/* harmony export */   "mapActions": () => /* binding */ mapActions,
-/* harmony export */   "createNamespacedHelpers": () => /* binding */ createNamespacedHelpers,
-/* harmony export */   "createLogger": () => /* binding */ createLogger
-/* harmony export */ });
-/* harmony import */ var _dist_vuex_common_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../dist/vuex.common.js */ "./node_modules/vuex/dist/vuex.common.js");
+var map = {
+	"./calendars.js": "./resources/js/store/modules/calendars.js",
+	"./permanences.js": "./resources/js/store/modules/permanences.js"
+};
 
 
-const {
-  Store,
-  install,
-  version,
-  mapState,
-  mapMutations,
-  mapGetters,
-  mapActions,
-  createNamespacedHelpers,
-  createLogger
-} = _dist_vuex_common_js__WEBPACK_IMPORTED_MODULE_0__
-
-
-
+function webpackContext(req) {
+	var id = webpackContextResolve(req);
+	return __webpack_require__(id);
+}
+function webpackContextResolve(req) {
+	if(!__webpack_require__.o(map, req)) {
+		var e = new Error("Cannot find module '" + req + "'");
+		e.code = 'MODULE_NOT_FOUND';
+		throw e;
+	}
+	return map[req];
+}
+webpackContext.keys = function webpackContextKeys() {
+	return Object.keys(map);
+};
+webpackContext.resolve = webpackContextResolve;
+module.exports = webpackContext;
+webpackContext.id = "./resources/js/store/modules sync .*\\.js$";
 
 /***/ })
 

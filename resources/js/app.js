@@ -18,6 +18,10 @@ Vue.component(
     "login-component",
     require("./components/LoginComponent.vue").default
 );
+// Vue.component(
+//     "permanences",
+//     require("./components/PermanencesComponent.vue").default
+// );
 
 const app = new Vue({
     el: "#app",
@@ -44,16 +48,16 @@ const app = new Vue({
     methods: {
         async register() {
             try {
-                console.log('register')
+                console.log("register");
                 const data = await axios.post("/register", {
                     name: "John Doe",
                     email: "john2.doe@example.com",
                     password: "pingpong",
                     password_confirmation: "pingpong"
-                })
-                console.log('data: ', data)
+                });
+                console.log("data: ", data);
             } catch (error) {
-                console.log('error: ', error)
+                console.log("error: ", error);
             }
         },
         async login() {
