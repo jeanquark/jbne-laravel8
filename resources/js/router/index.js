@@ -16,6 +16,7 @@ import AdminPermanencesIndex from "../views/admin/permanences/index"
 // import AdminUsersEdit from "../views/admin/users/edit";
 // import AdminLawyers from "../views/admin/lawyers";
 import Permanences from "../views/permanences"
+import AdminFilesIndex from "../views/admin/files/index"
 
 const router = new VueRouter({
     mode: "history",
@@ -66,6 +67,11 @@ const router = new VueRouter({
                     path: "permanences",
                     name: "adminPermanencesIndex",
                     component: AdminPermanencesIndex
+                },
+                {
+                    path: "files",
+                    name: "adminFilesIndex",
+                    component: AdminFilesIndex
                 }
             ]
         }
