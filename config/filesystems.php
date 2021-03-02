@@ -57,8 +57,7 @@ return [
             'root' => storage_path('app/files'),
             'url' => env('APP_URL').'/files',
             'visibility' => 'private',
-        ],
-
+        ]
     ],
 
     /*

@@ -26,13 +26,20 @@ export const actions = {
         return data
 		commit('SET_FILES', { data })
     },
-    async fetchFile ({ commit }, payload) {
-		console.log('[VUEX] fetchFile: ', payload)
-		// const { fileName } = payload
-        // const { data } = await axios.get(`/api/v1/files?year=${year}&quarter=${quarter}`)
-        // console.log('data: ', data)
-		// commit('SET_FILE', { year, quarter, data })
-	}
+    async fetchFile({}, payload) {
+        try {
+			const { filePath } = payload
+			console.log('filePath: ', filePath)
+            const data = await axios.get(`/api/v1/files/${filePath}`, {
+				responseType: 'blob'
+			});
+			// const data = await axios.get(`/api/v1/files/${filePath}`);
+			console.log('data: ', data)
+			return data
+        } catch (error) {
+            console.log("error: ", error);
+        }
+    }
 }
 
 export const getters = {

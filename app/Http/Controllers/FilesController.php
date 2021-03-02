@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\File;
 
+use Response;
 
 class FilesController extends Controller
 {
@@ -41,19 +42,22 @@ class FilesController extends Controller
      * @param  \App\Models\File  $file
      * @return \Illuminate\Http\Response
      */
-    public function show(File $file)
+    public function show($filePath)
     {
-        //
+        // return Storage::disk('files')->download(urldecode($filePath));
+        // return Storage::disk('files')->download('Folder 1/600x800.jpg');
+        // $file = urldecode($filePath);
+        // return response()->json($file);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\File  $file
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, File $file)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -61,10 +65,10 @@ class FilesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\File  $file
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(File $file)
+    public function destroy($id)
     {
         //
     }

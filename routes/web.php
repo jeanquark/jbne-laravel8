@@ -32,6 +32,7 @@ Route::get('/', function () {
 Route::get('/permanences', function () {
     return view('permanences');
 });
+// Route::get('/permanences', [App\Http\Controllers\PermanencesController::class, 'index'])->where('any', '.*');
 
 Route::get('/fichiers', function () {
     return view('files');

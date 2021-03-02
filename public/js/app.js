@@ -3300,10 +3300,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/lawyer.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/lawyer.vue?vue&type=script&lang=js& ***!
   \********************************************************************************************************************************************************************************************************/
+=======
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/permanences.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/permanences.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************************************/
+>>>>>>> 00a49f3ae3514d832aec7e6f056d310e254e83ca
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3318,6 +3325,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+<<<<<<< HEAD
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "lawyer"
 });
@@ -3335,6 +3343,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
+=======
+>>>>>>> 00a49f3ae3514d832aec7e6f056d310e254e83ca
 //
 //
 //
@@ -3342,8 +3352,41 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+<<<<<<< HEAD
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "student"
+=======
+//
+// import moment from 'moment'
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "permanences",
+  data: function data() {
+    return {
+      date: '',
+      dates: []
+    };
+  },
+  methods: {
+    selectDate: function selectDate(values, index) {
+      console.log('selectDate: ', values, index);
+      var day = values[values.length - 1];
+      var dayOfWeek = new Date(day).getDay();
+      console.log('day: ', day);
+      console.log('dayOfWeek: ', dayOfWeek);
+
+      switch (dayOfWeek) {
+        case 1:
+          console.log('case 1'); // console.log(moment(day, 'YYYY-MM-DD').add(1, 'days'))
+          // dates.add('')
+
+          break;
+
+        default:
+          break;
+      }
+    }
+  }
+>>>>>>> 00a49f3ae3514d832aec7e6f056d310e254e83ca
 });
 
 /***/ }),
@@ -3382,7 +3425,11 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 vue__WEBPACK_IMPORTED_MODULE_6__.default.component("example-component", __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue").default);
-vue__WEBPACK_IMPORTED_MODULE_6__.default.component("login-component", __webpack_require__(/*! ./components/LoginComponent.vue */ "./resources/js/components/LoginComponent.vue").default);
+vue__WEBPACK_IMPORTED_MODULE_6__.default.component("login-component", __webpack_require__(/*! ./components/LoginComponent.vue */ "./resources/js/components/LoginComponent.vue").default); // Vue.component(
+//     "permanences",
+//     require("./components/PermanencesComponent.vue").default
+// );
+
 var app = new vue__WEBPACK_IMPORTED_MODULE_6__.default({
   el: "#app",
   router: _router_index__WEBPACK_IMPORTED_MODULE_2__.default,
@@ -3414,7 +3461,7 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_6__.default({
             switch (_context.prev = _context.next) {
               case 0:
                 _context.prev = 0;
-                console.log('register');
+                console.log("register");
                 _context.next = 4;
                 return axios__WEBPACK_IMPORTED_MODULE_5___default().post("/register", {
                   name: "John Doe",
@@ -3425,14 +3472,14 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_6__.default({
 
               case 4:
                 data = _context.sent;
-                console.log('data: ', data);
+                console.log("data: ", data);
                 _context.next = 11;
                 break;
 
               case 8:
                 _context.prev = 8;
                 _context.t0 = _context["catch"](0);
-                console.log('error: ', _context.t0);
+                console.log("error: ", _context.t0);
 
               case 11:
               case "end":
@@ -3640,9 +3687,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _views_admin_lawyers_edit__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../views/admin/lawyers/edit */ "./resources/js/views/admin/lawyers/edit.vue");
 /* harmony import */ var _views_admin_trainees_index__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../views/admin/trainees/index */ "./resources/js/views/admin/trainees/index.vue");
 /* harmony import */ var _views_admin_permanences_index__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../views/admin/permanences/index */ "./resources/js/views/admin/permanences/index.vue");
+<<<<<<< HEAD
 /* harmony import */ var _views_admin_files_index__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../views/admin/files/index */ "./resources/js/views/admin/files/index.vue");
 /* harmony import */ var _views_student__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../views/student */ "./resources/js/views/student.vue");
 /* harmony import */ var _views_lawyer__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../views/lawyer */ "./resources/js/views/lawyer.vue");
+=======
+/* harmony import */ var _views_permanences__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../views/permanences */ "./resources/js/views/permanences.vue");
+>>>>>>> 00a49f3ae3514d832aec7e6f056d310e254e83ca
 
 
 vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vue_router__WEBPACK_IMPORTED_MODULE_1__.default);
@@ -3660,6 +3711,7 @@ vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vue_router__WEBPACK_IMPORTED_MODULE
 // import AdminLawyers from "../views/admin/lawyers";
 
 
+<<<<<<< HEAD
 
 
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__.default({
@@ -3672,6 +3724,14 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__.default({
     path: "/lawyer",
     name: "lawyer",
     component: _views_lawyer__WEBPACK_IMPORTED_MODULE_12__.default
+=======
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__.default({
+  mode: "history",
+  routes: [{
+    path: "/permanences",
+    name: "permanences",
+    component: _views_permanences__WEBPACK_IMPORTED_MODULE_10__.default
+>>>>>>> 00a49f3ae3514d832aec7e6f056d310e254e83ca
   }, {
     path: "/admin",
     name: "adminLayout",
@@ -3863,6 +3923,7 @@ var mutations = {
 
     if (!state.calendars[year]) {
       vue__WEBPACK_IMPORTED_MODULE_1__.default.set(state.calendars, year, {});
+<<<<<<< HEAD
     }
 
     if (!state.calendars[year][quarter]) {
@@ -3964,12 +4025,28 @@ var actions = {
   fetchFiles: function fetchFiles(_ref, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
       var commit, _yield$axios$get, data;
+=======
+    }
+
+    if (!state.calendars[year][quarter]) {
+      vue__WEBPACK_IMPORTED_MODULE_1__.default.set(state.calendars[year], quarter, {});
+    }
+
+    state.calendars[year][quarter] = data[year][quarter];
+  }
+};
+var actions = {
+  fetchCalendars: function fetchCalendars(_ref, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      var commit, year, quarter, _yield$axios$get, data;
+>>>>>>> 00a49f3ae3514d832aec7e6f056d310e254e83ca
 
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               commit = _ref.commit;
+<<<<<<< HEAD
               console.log('[VUEX] fetchFiles: ', payload);
               _context.next = 4;
               return axios.get("/api/v1/files");
@@ -3979,6 +4056,22 @@ var actions = {
               data = _yield$axios$get.data;
               console.log('data: ', data);
               return _context.abrupt("return", data);
+=======
+              console.log('[VUEX] fetchCalendars: ', payload);
+              year = payload.year, quarter = payload.quarter;
+              _context.next = 5;
+              return axios.get("/api/v1/calendars?year=".concat(year, "&quarter=").concat(quarter));
+
+            case 5:
+              _yield$axios$get = _context.sent;
+              data = _yield$axios$get.data;
+              console.log('data: ', data);
+              commit('SET_CALENDARS', {
+                year: year,
+                quarter: quarter,
+                data: data
+              });
+>>>>>>> 00a49f3ae3514d832aec7e6f056d310e254e83ca
 
             case 9:
             case "end":
@@ -3987,6 +4080,7 @@ var actions = {
         }
       }, _callee);
     }))();
+<<<<<<< HEAD
   },
   fetchFile: function fetchFile(_ref2, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
@@ -4013,6 +4107,13 @@ var actions = {
 var getters = {
   files: function files(state) {
     return state.files;
+=======
+  }
+};
+var getters = {
+  calendars: function calendars(state) {
+    return state.calendars;
+>>>>>>> 00a49f3ae3514d832aec7e6f056d310e254e83ca
   }
 };
 
@@ -23410,10 +23511,17 @@ component.options.__file = "resources/js/views/admin/trainees/index.vue"
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ "./resources/js/views/lawyer.vue":
 /*!***************************************!*\
   !*** ./resources/js/views/lawyer.vue ***!
   \***************************************/
+=======
+/***/ "./resources/js/views/permanences.vue":
+/*!********************************************!*\
+  !*** ./resources/js/views/permanences.vue ***!
+  \********************************************/
+>>>>>>> 00a49f3ae3514d832aec7e6f056d310e254e83ca
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -23421,8 +23529,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
+<<<<<<< HEAD
 /* harmony import */ var _lawyer_vue_vue_type_template_id_79da71c3___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lawyer.vue?vue&type=template&id=79da71c3& */ "./resources/js/views/lawyer.vue?vue&type=template&id=79da71c3&");
 /* harmony import */ var _lawyer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./lawyer.vue?vue&type=script&lang=js& */ "./resources/js/views/lawyer.vue?vue&type=script&lang=js&");
+=======
+/* harmony import */ var _permanences_vue_vue_type_template_id_6df4185c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./permanences.vue?vue&type=template&id=6df4185c&scoped=true& */ "./resources/js/views/permanences.vue?vue&type=template&id=6df4185c&scoped=true&");
+/* harmony import */ var _permanences_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./permanences.vue?vue&type=script&lang=js& */ "./resources/js/views/permanences.vue?vue&type=script&lang=js&");
+>>>>>>> 00a49f3ae3514d832aec7e6f056d310e254e83ca
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -23432,6 +23545,7 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 ;
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+<<<<<<< HEAD
   _lawyer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
   _lawyer_vue_vue_type_template_id_79da71c3___WEBPACK_IMPORTED_MODULE_0__.render,
   _lawyer_vue_vue_type_template_id_79da71c3___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
@@ -23477,13 +23591,25 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
   false,
   null,
   null,
+=======
+  _permanences_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _permanences_vue_vue_type_template_id_6df4185c_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _permanences_vue_vue_type_template_id_6df4185c_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "6df4185c",
+>>>>>>> 00a49f3ae3514d832aec7e6f056d310e254e83ca
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
+<<<<<<< HEAD
 component.options.__file = "resources/js/views/student.vue"
+=======
+component.options.__file = "resources/js/views/permanences.vue"
+>>>>>>> 00a49f3ae3514d832aec7e6f056d310e254e83ca
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -23680,10 +23806,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ "./resources/js/views/lawyer.vue?vue&type=script&lang=js&":
 /*!****************************************************************!*\
   !*** ./resources/js/views/lawyer.vue?vue&type=script&lang=js& ***!
   \****************************************************************/
+=======
+/***/ "./resources/js/views/permanences.vue?vue&type=script&lang=js&":
+/*!*********************************************************************!*\
+  !*** ./resources/js/views/permanences.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************/
+>>>>>>> 00a49f3ae3514d832aec7e6f056d310e254e83ca
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -23691,6 +23824,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
+<<<<<<< HEAD
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_lawyer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./lawyer.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/lawyer.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_lawyer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
 
@@ -23709,6 +23843,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_student_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./student.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/student.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_student_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+=======
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_permanences_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./permanences.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/permanences.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_permanences_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+>>>>>>> 00a49f3ae3514d832aec7e6f056d310e254e83ca
 
 /***/ }),
 
@@ -23929,15 +24067,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ "./resources/js/views/lawyer.vue?vue&type=template&id=79da71c3&":
 /*!**********************************************************************!*\
   !*** ./resources/js/views/lawyer.vue?vue&type=template&id=79da71c3& ***!
   \**********************************************************************/
+=======
+/***/ "./resources/js/views/permanences.vue?vue&type=template&id=6df4185c&scoped=true&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/views/permanences.vue?vue&type=template&id=6df4185c&scoped=true& ***!
+  \***************************************************************************************/
+>>>>>>> 00a49f3ae3514d832aec7e6f056d310e254e83ca
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+<<<<<<< HEAD
 /* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_lawyer_vue_vue_type_template_id_79da71c3___WEBPACK_IMPORTED_MODULE_0__.render,
 /* harmony export */   "staticRenderFns": () => /* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_lawyer_vue_vue_type_template_id_79da71c3___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns
 /* harmony export */ });
@@ -23959,6 +24105,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => /* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_student_vue_vue_type_template_id_440cd90c___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_student_vue_vue_type_template_id_440cd90c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./student.vue?vue&type=template&id=440cd90c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/student.vue?vue&type=template&id=440cd90c&");
+=======
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_permanences_vue_vue_type_template_id_6df4185c_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+/* harmony export */   "staticRenderFns": () => /* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_permanences_vue_vue_type_template_id_6df4185c_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_permanences_vue_vue_type_template_id_6df4185c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./permanences.vue?vue&type=template&id=6df4185c&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/permanences.vue?vue&type=template&id=6df4185c&scoped=true&");
+>>>>>>> 00a49f3ae3514d832aec7e6f056d310e254e83ca
 
 
 /***/ }),
@@ -24598,7 +24750,11 @@ var render = function() {
               _vm._l(_vm.years.length, function(n) {
                 return _c(
                   "v-tab-item",
+<<<<<<< HEAD
                   { key: n },
+=======
+                  { key: n, attrs: { lazy: "" } },
+>>>>>>> 00a49f3ae3514d832aec7e6f056d310e254e83ca
                   [
                     _c(
                       "v-card",
@@ -25066,10 +25222,17 @@ render._withStripped = true
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/lawyer.vue?vue&type=template&id=79da71c3&":
 /*!*************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/lawyer.vue?vue&type=template&id=79da71c3& ***!
   \*************************************************************************************************************************************************************************************************************/
+=======
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/permanences.vue?vue&type=template&id=6df4185c&scoped=true&":
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/permanences.vue?vue&type=template&id=6df4185c&scoped=true& ***!
+  \******************************************************************************************************************************************************************************************************************************/
+>>>>>>> 00a49f3ae3514d832aec7e6f056d310e254e83ca
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -25082,6 +25245,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+<<<<<<< HEAD
   return _vm._m(0)
 }
 var staticRenderFns = [
@@ -25134,6 +25298,35 @@ var staticRenderFns = [
     ])
   }
 ]
+=======
+  return _c(
+    "div",
+    [
+      _c("h2", [_vm._v("Permanences2")]),
+      _vm._v("\n    date: " + _vm._s(_vm.date)),
+      _c("br"),
+      _c("br"),
+      _vm._v("\n    dates: " + _vm._s(_vm.dates)),
+      _c("br"),
+      _c("br"),
+      _vm._v(" "),
+      _c("v-date-picker", {
+        attrs: { "first-day-of-week": 1, "show-week": true, multiple: true },
+        on: { input: _vm.selectDate },
+        model: {
+          value: _vm.dates,
+          callback: function($$v) {
+            _vm.dates = $$v
+          },
+          expression: "dates"
+        }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+>>>>>>> 00a49f3ae3514d832aec7e6f056d310e254e83ca
 render._withStripped = true
 
 
@@ -86278,7 +86471,10 @@ module.exports = index_cjs;
 
 var map = {
 	"./calendars.js": "./resources/js/store/modules/calendars.js",
+<<<<<<< HEAD
 	"./files.js": "./resources/js/store/modules/files.js",
+=======
+>>>>>>> 00a49f3ae3514d832aec7e6f056d310e254e83ca
 	"./permanences.js": "./resources/js/store/modules/permanences.js"
 };
 

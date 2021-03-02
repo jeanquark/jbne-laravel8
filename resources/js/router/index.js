@@ -19,6 +19,7 @@ import AdminPermanencesIndex from "../views/admin/permanences/index"
 import AdminFilesIndex from "../views/admin/files/index"
 import Student from "../views/student"
 import Lawyer from "../views/lawyer"
+import Permanences from "../views/permanences"
 
 const router = new VueRouter({
     mode: "history",

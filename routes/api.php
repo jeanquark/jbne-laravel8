@@ -30,6 +30,8 @@ Route::middleware('role:student|lawyer')->get('/v1/files', [App\Http\Controllers
 
 // Permanences
 Route::apiResource('/v1/permanences', App\Http\Controllers\PermanencesController::class);
+Route::apiResource('/v1/files', App\Http\Controllers\FilesController::class);
+Route::get('/v1/files/{file}', [App\Http\Controllers\FilesController::class, 'show'])->where('file', '.*');
 // Route::get('/v1/permanences', [App\Http\Controllers\PermanencesController::class, 'index']);
 // Route::put('/v1/permanences/update', [App\Http\Controllers\PermanencesController::class, 'update']);
 // Route::get('/v1/permanences/{year}/{quarter}', [App\Http\Controllers\PermanencesController::class, 'index']);
