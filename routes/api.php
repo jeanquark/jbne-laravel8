@@ -18,11 +18,15 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('role:lawyer')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/v1/calendars', [App\Http\Controllers\CalendarsController::class, 'index']);
+
+Route::middleware('role:admin')->get('/v1/calendars', [App\Http\Controllers\CalendarsController::class, 'index']);
+
+Route::middleware('role:student|lawyer')->get('/v1/files', [App\Http\Controllers\FilesController::class, 'index']);
 
 // Permanences
 Route::apiResource('/v1/permanences', App\Http\Controllers\PermanencesController::class);

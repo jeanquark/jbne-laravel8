@@ -32,27 +32,27 @@ class UsersTableSeeder extends Seeder
         Permission::create(['name' => 'delete availability']);
 
         // create roles and assign existing permissions
+        $studentRole = Role::create(['name' => 'student']);
+        $studentRole->givePermissionTo('read files');
+
         $lawyerRole = Role::create(['name' => 'lawyer']);
         $lawyerRole->givePermissionTo(['create availability', 'read availability', 'edit availability', 'delete availability']);
-
-        $traineeRole = Role::create(['name' => 'trainee']);
-        $traineeRole->givePermissionTo('read files');
 
         $admin = Role::create(['name' => 'admin']);
         $admin->givePermissionTo(Permission::all());
 
         // create demo users
         $user = \App\Models\User::factory()->create([
+            'name' => 'Trainee User',
+            'email' => 'trainee@example.com',
+        ]);
+        $user->assignRole($studentRole);
+
+        $user = \App\Models\User::factory()->create([
             'name' => 'Lawyer User',
             'email' => 'lawyer@example.com',
         ]);
         $user->assignRole($lawyerRole);
-
-        $user = \App\Models\User::factory()->create([
-            'name' => 'Trainee User',
-            'email' => 'trainee@example.com',
-        ]);
-        $user->assignRole($traineeRole);
 
         $user = \App\Models\User::factory()->create([
             'name' => 'Admin User',

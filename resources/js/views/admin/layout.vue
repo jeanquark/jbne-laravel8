@@ -58,6 +58,12 @@
                     </v-list-item-icon>
                     <v-list-item-title>Permanences</v-list-item-title>
                 </v-list-item>
+                <v-list-item to="/admin/files">
+                    <v-list-item-icon>
+                        <v-icon>mdi-file</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-title>Fichiers</v-list-item-title>
+                </v-list-item>
             </v-list>
         </v-navigation-drawer>
         <!-- </v-app-bar> -->

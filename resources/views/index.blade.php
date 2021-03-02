@@ -33,23 +33,27 @@
             {{-- <example-component></example-component> --}}
             <v-row no-gutters>
                 <v-col cols="12">
+                    <a href="/home">Home</a> |
                     <a href="/about">About</a> |
                     <a href="/login">Login</a> |
-                    <a href="/home">Home</a> |
+                    <a href="/register">Register</a> |
+                    <a href="/student">Student protected page</a> |
+                    <a href="/lawyer">Lawyer protected page</a> |
                     <a href="/admin/index">Admin</a> |
+                    <a href="/admin/avocats/ajouter">Create new lawyer</a> |
                     <a href="/permanences">Permanences</a>
                 </v-col>
             </v-row>
             {{-- <login-component></login-component> --}}
             <v-row no-gutters justify-center>
                 <v-col cols="12">
-                    <v-btn small color="blue" class="white--text" @click="incrementCounter">Increment</v-btn>
+                    {{-- <v-btn small color="blue" class="white--text" @click="incrementCounter">Increment</v-btn> --}}
                     <v-btn small color="orange" class="white--text" @click="getUser">Get user</v-btn>
 
                 </v-col>
                 <v-col cols="12">
-                    <v-btn small color="pink" class="white--text" @click="login">Login</v-btn>
-                    <v-btn small color="success" class="white--text" @click="register">Register</v-btn>
+                    {{-- <v-btn small color="pink" class="white--text" @click="login">Login</v-btn> --}}
+                    {{-- <v-btn small color="success" class="white--text" @click="register">Register</v-btn> --}}
                     <a href="/forgot-password">Forgot password</a>
                     {{-- <v-btn small color="error" class="white--text" @click="forgotPassword">Forgot password</v-btn> --}}
                     @if (Auth::check())

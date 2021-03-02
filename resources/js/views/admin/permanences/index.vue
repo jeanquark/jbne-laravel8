@@ -23,7 +23,7 @@
                     @click="switchYear(i - 1)"
                     >{{ years[i - 1] }}</v-tab
                 >
-                <v-tab-item lazy v-for="n in years.length" :key="n">
+                <v-tab-item v-for="n in years.length" :key="n">
                     <v-card flat>
                         <v-tabs color="secondary" slider-color="yellow">
                             <v-tab

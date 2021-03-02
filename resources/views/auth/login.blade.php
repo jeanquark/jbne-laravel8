@@ -12,17 +12,17 @@
         <form method="POST" action="{{ route('login') }}">
             @csrf
             @if (session('status'))
-            <div class="mb-4 font-medium text-sm text-green-600">
-                {{ session('status') }}
-            </div>
+                <div class="mb-4 font-medium text-sm text-green-600">
+                    {{ session('status') }}
+                </div>
             @endif
             @error('email')
-            {{ $message }}
+                {{ $message }}
             @enderror
             <label for="email">Email</label>
             <input type="email" name="email" value="lawyer@example.com">
             <label for="password">Password</label>
-            <input type="password" name="password">
+            <input type="password" name="password" value="password">
             <button type="submit">Login</button>
         </form>
     </div>
