@@ -3,16 +3,17 @@
         <h1>Files</h1>
         data: {{ data }}<br /><br />
         data3: {{ data3 }}<br /><br />
-        tree3: {{ tree3 }}<br /><br />
+        selection: {{ selection }}<br /><br />
         <!-- <div v-for="(item, index) in data3" :key="index">{{ item }} <br /><br /></div> -->
         <!-- <br /><br /> -->
         <!-- entries3: {{ entries3 }}<br /><br /> -->
+        def: {{ def }}<br /><br />
         <!-- items: {{ items }}<br /><br /> -->
         <!-- items2: {{ items2 }}<br /><br /> -->
         <!-- <a href="/images/1920x1080.jpg" download>Download image</a> -->
         <!-- <a href="/storage/app/files/768x600.jpg" download>Download image 2</a> -->
 
-        <v-treeview v-model="tree3" :items="data3" activatable item-key="name" :return-object="false" open-on-click>
+        <v-treeview :items="data3" item-key="name" :return-object="true" :activatable="true" :open-on-click="true" @update:open="navigateTo" v-model="selection">
             <template v-slot:prepend="{ item, open }">
                 <v-icon v-if="!item.file">
                     {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
@@ -24,7 +25,6 @@
             <template v-slot:label="{ item }">
                 <span v-if="item.file" class="file" @click="download(item)">
                     {{ item.name }}
-                    <!--<v-btn small @click="download(item)">download</v-btn>-->
                 </span>
                 <span v-else>
                     {{ item.name }}
@@ -33,11 +33,16 @@
         </v-treeview>
 
         <br /><br />
+        <h2>abc3:</h2>
+        {{ abc3 }}
+        <!-- <div v-for="(item, index) in abc3" :key="index" style="border: 1px solid red; cursor: pointer" @click="navigate(index, item)">{{ item.name }} <br /><br /></div> -->
+
+        <br /><br />
 
         <h2>Folders:</h2>
         abc: {{ abc }}<br />
         <v-btn @click="navigateBack">Move back</v-btn>
-        <div v-for="(item, index) in abc" :key="index" style="border: 1px solid red; cursor: pointer;" @click="navigate(index, item)">{{ item.name }} <br /><br /></div>
+        <div v-for="(item, index) in abc" :key="index" style="border: 1px solid red; cursor: pointer" @click="navigate(index, item)">{{ item.name }} <br /><br /></div>
     </div>
 </template>
 
@@ -54,22 +59,41 @@ export default {
         for (let i = 0; i < data.length; i++) {
             // console.log("data[i]: ", data[i]);
             const separator = data[i].split('/')
-            // console.log("separator: ", separator);
+            // console.log("separator: ", separator)
             let overrideParentId = false
             let newParentId
             for (let j = 0; j < separator.length; j++) {
-                // console.log("overrideParentId: ", overrideParentId);
+                console.log("separator[j]: ", separator[j])
+                console.log("separator[j+1]: ", separator[j+1])
                 let id = parseInt(`${j + 1}${i + 1}`)
-                let file
                 let parentId = overrideParentId ? newParentId : parseInt(`${j < 1 ? 0 : j}${j < 1 ? 0 : i + 1}`)
-                let double = this.entries3.find((a) => a.name === separator[j] && a.parentId == parentId)
-                if (double) {
-                    // console.log("double: ", double);
+                let file
+
+                // if (!this.def[`${parentId}_${separator[j]}`]) {
+                    // this.def.find()
+                    console.log('Created ', parentId, separator[j])
+                    this.def[`${parentId}_${id}`] = {
+                        name: separator[j],
+                        parentId,
+                        id,
+                        children: [separator[j+1]]
+                    }
+                    // this.def[`${parentId}_${id}`]['children'] ? this.def[`${parentId}_${id}`]['children'].push(separator[j+1]) : this.def[`${parentId}_${id}`]['children'] = []
+                // } else {
+                //     console.log('Already exists ', separator[j+1])
+                //     this.def[`${parentId}_${separator[j]}`]['children'].push(separator[j+1])
+                // }
+
+
+                let duplicate = this.entries3.find((a) => a.name === separator[j] && a.parentId == parentId)
+                if (duplicate) {
+                    // console.log("duplicate: ", duplicate);
                     overrideParentId = true
-                    newParentId = double.id
+                    newParentId = duplicate.id
                     // console.log("newParentId: ", newParentId);
                     continue
                 }
+                // console.log("separator[j]: ", separator[j])
                 if (j >= separator.length - 1) {
                     // file = "pdf";
                     file = separator[j].split('.').pop()
@@ -100,8 +124,69 @@ export default {
             data: null,
             data3: [],
             // tree: [],
-            tree3: [],
+            selection: [],
             entries3: [],
+            def: {},
+            def2: {
+                '0_11': {
+                    name: 'Folder 1',
+                    parentId: 0,
+                    id: 11,
+                    children: [
+                        'file_1.pdf'
+                    ]
+                },
+                '0_12': {
+                    name: 'Folder 2',
+                    parentId: 0,
+                    id: 12,
+                    children: [
+                        'Folder 2_1',
+                        'Folder 2_2'
+                    ]
+                },
+                '0_16': {
+                    name: 'Webstamps.pdf',
+                    parentId: 0,
+                    id: 16,
+                    children: [
+                    ]
+                },
+                '12_22': {
+                    name: 'Folder 2_1',
+                    parentId: 12,
+                    id: 22,
+                    children: [
+                        'Folder 2_1_1',
+                        'Folder 2_1_2',
+                        'file 2_1.pdf'
+                    ]
+                },
+                '12_25': {
+                    name: 'Folder 2_1',
+                    parentId: 12,
+                    id: 25,
+                    children: [
+                        'file 2_2.pdf'
+                    ]
+                },
+                '22_33': {
+                    name: 'Folder 2_1_1',
+                    parentId: 22,
+                    id: 33,
+                    children: [
+                        'file 2_1_1.pdf'
+                    ]
+                },
+                '22_34': {
+                    name: 'Folder 2_1_2',
+                    parentId: 22,
+                    id: 34,
+                    children: [
+                        'file 2_1_2.pdf'
+                    ]
+                }
+            },
             files: {
                 html: 'mdi-language-html5',
                 js: 'mdi-nodejs',
@@ -116,7 +201,8 @@ export default {
                 doc: 'mdi-file-word',
                 docx: 'mdi-file-word',
             },
-            abc: []
+            abc: [],
+            abc3: [],
         }
     },
     computed: {
@@ -162,6 +248,41 @@ export default {
             console.log('navigateBack')
             this.abc = this.listToTree(this.entries3)
         },
+        navigateTo(items) {
+            console.log('navigateTo: ', items)
+            // this.abc3 = this.def['0_Folder 1']
+            // this.abc3 = 'abc3'
+            // return
+            if (items && items.length > 0) {
+                const currentDirectory = items[items.length - 1]
+                console.log('currentDirectory.name: ', currentDirectory.name)
+                console.log('currentDirectory: ', currentDirectory)
+                this.abc3 = this.def[`${currentDirectory.parentId}_${currentDirectory.id}`]['children']
+                // const abc = this.data3.flatMap((a) => a.children)
+                // const abc = this.data3.find((product) => {
+                //     return product.children.some((item) => {
+                //         return item.name === 'Folder 2_2'
+                //     })
+                // })
+                // let abc = []
+                let findDeep = function (data, activity) {
+                    return data.some(function (e) {
+                        if (e.name == activity) {
+                            abc.push(data)
+                        } else if (e.children) return findDeep(e.children, activity)
+                    })
+                }
+                // console.log(findDeep(this.data3, currentDirectory.name))
+
+                // const abc = this.data3.find(a => a.name == 'Folder 2_2' && a.parentId == 22)
+                // console.log('abc: ', abc)
+                // this.abc3 = ['abc', 'def', 'ghi']
+                // this.abc3 = this.data3[1]['children'][0]['children']
+            } else {
+                // this.abc3 = []
+                this.abc3 = this.data3.map(a => a.name)
+            }
+        },
         async download(file) {
             try {
                 console.log('download file: ', file)
@@ -174,6 +295,11 @@ export default {
             }
         },
     },
+    // watch: {
+    //     tree3(newValue) {
+    //         console.log('[watch] tree3: ', newValue)
+    //     },
+    // },
 }
 </script>
 
