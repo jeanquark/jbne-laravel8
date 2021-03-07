@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use App\Models\File;
-
 use Response;
 
 class FilesController extends Controller
@@ -19,10 +18,13 @@ class FilesController extends Controller
     {
         // $files = Storage::disk('files')->get('Webstamps.pdf');
 
-        $files = Storage::disk('files')->allFiles();
         $directories = Storage::disk('files')->allDirectories();
+        $files = Storage::disk('files')->allFiles();
 
-        return response()->json($files);
+        return response()->json([
+            'directories' => $directories,
+            'files' => $files,
+        ]);
     }
 
     /**

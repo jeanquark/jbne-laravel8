@@ -2,31 +2,41 @@
     <div>
         <h1>Files</h1>
         data: {{ data }}<br /><br />
+        directories: {{ directories }}<br /><br />
+        files: {{ files }}<br /><br />
+        directoriesList: {{ directoriesList }}<br /><br />
         data3: {{ data3 }}<br /><br />
         selection: {{ selection }}<br /><br />
+        selectedParents: {{ selectedParents }}<br /><br />
+        opened: {{ opened }}<br /><br />
         <!-- <div v-for="(item, index) in data3" :key="index">{{ item }} <br /><br /></div> -->
         <!-- <br /><br /> -->
         <!-- entries3: {{ entries3 }}<br /><br /> -->
-        def: {{ def }}<br /><br />
+        <!-- def: {{ def }}<br /><br /> -->
         <!-- items: {{ items }}<br /><br /> -->
         <!-- items2: {{ items2 }}<br /><br /> -->
         <!-- <a href="/images/1920x1080.jpg" download>Download image</a> -->
         <!-- <a href="/storage/app/files/768x600.jpg" download>Download image 2</a> -->
 
-        <v-treeview :items="data3" item-key="name" :return-object="true" :activatable="true" :open-on-click="true" @update:open="navigateTo" v-model="selection">
-            <template v-slot:prepend="{ item, open }">
-                <v-icon v-if="!item.file">
+        <v-treeview :items="items" item-key="id" :open="[1]" @update:open="navigateTo2"></v-treeview>
+
+        <br /><br />
+
+        <!-- <v-treeview :items="data3" item-key="name" :return-object="true" :hoverable="true" :activatable="false" :open-on-click="true" :multiple-active="false" @update:open="navigateTo" v-model="selection"> -->
+        <v-treeview :items="data3" item-key="name" :return-object="true" :hoverable="true" :open-on-click="true" :multiple-active="false" @click="fetch2()">
+            <template v-slot:prepend="{ item, open }" >
+                <v-icon @click="navigateTo3(item, open)" v-if="!item.file">
                     {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
                 </v-icon>
                 <v-icon v-else>
-                    {{ files[item.file] }}
+                    {{ fileTypes[item.file] }}
                 </v-icon>
             </template>
-            <template v-slot:label="{ item }">
+            <template v-slot:label="{ item, open }" >
                 <span v-if="item.file" class="file" @click="download(item)">
                     {{ item.name }}
                 </span>
-                <span v-else>
+                <span @click="navigateTo3(item, open)" v-else>
                     {{ item.name }}
                 </span>
             </template>
@@ -54,38 +64,67 @@ export default {
     async created() {
         const data = await this.$store.dispatch('files/fetchFiles')
         // console.log("data: ", data);
-        this.data = data
+        this.directories = data['directories']
+        this.files = data['files']
+        this.data = data['files']
         // console.log('parseInt(00): ', parseInt(00))
-        for (let i = 0; i < data.length; i++) {
+        for (let i = 0; i < this.directories.length; i++) {
+            const separator = this.directories[i].split('/')
+            // console.log('separator: ', separator)
+            if (!this.directoriesList[separator[separator.length - 1]]) {
+                this.directoriesList[`${separator[separator.length - 1]}`] = {
+                    name: separator[separator.length - 1],
+                    children: []
+                }
+            }
+            if (separator[separator.length - 2]) {
+                // console.log('Add to children array: ', separator[separator.length - 1])
+                this.directoriesList[separator[separator.length - 2]]['children'].push(separator[separator.length - 1])
+            }
+            // for (let j = 0; j < separator.length; j++) {
+            //     const id = parseInt(`${j + 1}${i + 1}`)
+            // }
+        }
+
+        for (let i = 0; i < this.files.length; i++) {
             // console.log("data[i]: ", data[i]);
-            const separator = data[i].split('/')
-            // console.log("separator: ", separator)
+            const separator = this.files[i].split('/')
+            // console.log("separator[separator.length - 1]: ", separator[separator.length - 1])
+            if (separator[separator.length - 2]) {
+                // console.log('abc')
+                this.directoriesList[separator[separator.length - 2]]['children'].push(separator[separator.length - 1])
+            } else {
+                // console.log('root file')
+                this.directoriesList[separator[separator.length - 1]] = {
+                    name: separator[separator.length - 1]
+                }
+            }
             let overrideParentId = false
             let newParentId
             for (let j = 0; j < separator.length; j++) {
-                console.log("separator[j]: ", separator[j])
-                console.log("separator[j+1]: ", separator[j+1])
+                // console.log("separator[j]: ", separator[j])
+                // console.log("separator[j+1]: ", separator[j+1])
                 let id = parseInt(`${j + 1}${i + 1}`)
                 let parentId = overrideParentId ? newParentId : parseInt(`${j < 1 ? 0 : j}${j < 1 ? 0 : i + 1}`)
+                let parentName = separator[j-1] ? separator[j-1] : null
                 let file
 
                 // if (!this.def[`${parentId}_${separator[j]}`]) {
-                    // this.def.find()
-                    console.log('Created ', parentId, separator[j])
-                    this.def[`${parentId}_${id}`] = {
-                        name: separator[j],
-                        parentId,
-                        id,
-                        children: [separator[j+1]]
-                    }
-                    // this.def[`${parentId}_${id}`]['children'] ? this.def[`${parentId}_${id}`]['children'].push(separator[j+1]) : this.def[`${parentId}_${id}`]['children'] = []
+                // this.def.find()
+                // console.log('Created ', parentId, separator[j])
+                this.def[`${parentId}_${id}`] = {
+                    name: separator[j],
+                    parentId,
+                    id,
+                    children: [separator[j + 1] ? separator[j + 1] : '']
+                }
+                // this.def[`${parentId}_${id}`]['children'] ? this.def[`${parentId}_${id}`]['children'].push(separator[j+1]) : this.def[`${parentId}_${id}`]['children'] = []
                 // } else {
                 //     console.log('Already exists ', separator[j+1])
                 //     this.def[`${parentId}_${separator[j]}`]['children'].push(separator[j+1])
                 // }
 
-
-                let duplicate = this.entries3.find((a) => a.name === separator[j] && a.parentId == parentId)
+                let duplicate = this.entries3.find(a => a.name === separator[j] && a.parentId == parentId)
                 if (duplicate) {
                     // console.log("duplicate: ", duplicate);
                     overrideParentId = true
@@ -103,9 +142,10 @@ export default {
                     // level: j,
                     id: id.toString(),
                     parentId: parentId.toString(),
-                    path: data[i],
+                    parentName,
+                    path: this.files[i],
                     file,
-                    children: [],
+                    children: []
                 })
                 overrideParentId = false
                 // console.log(`separator[j]: ${separator[j]} j: ${j}`);
@@ -122,6 +162,12 @@ export default {
     data() {
         return {
             data: null,
+            expanded: true,
+            opened: [],
+            directories: [],
+            files: [],
+            directoriesList: {},
+            selectedParents: [],
             data3: [],
             // tree: [],
             selection: [],
@@ -132,62 +178,46 @@ export default {
                     name: 'Folder 1',
                     parentId: 0,
                     id: 11,
-                    children: [
-                        'file_1.pdf'
-                    ]
+                    children: ['file_1.pdf']
                 },
                 '0_12': {
                     name: 'Folder 2',
                     parentId: 0,
                     id: 12,
-                    children: [
-                        'Folder 2_1',
-                        'Folder 2_2'
-                    ]
+                    children: ['Folder 2_1', 'Folder 2_2']
                 },
                 '0_16': {
                     name: 'Webstamps.pdf',
                     parentId: 0,
                     id: 16,
-                    children: [
-                    ]
+                    children: []
                 },
                 '12_22': {
                     name: 'Folder 2_1',
                     parentId: 12,
                     id: 22,
-                    children: [
-                        'Folder 2_1_1',
-                        'Folder 2_1_2',
-                        'file 2_1.pdf'
-                    ]
+                    children: ['Folder 2_1_1', 'Folder 2_1_2', 'file 2_1.pdf']
                 },
                 '12_25': {
                     name: 'Folder 2_1',
                     parentId: 12,
                     id: 25,
-                    children: [
-                        'file 2_2.pdf'
-                    ]
+                    children: ['file 2_2.pdf']
                 },
                 '22_33': {
                     name: 'Folder 2_1_1',
                     parentId: 22,
                     id: 33,
-                    children: [
-                        'file 2_1_1.pdf'
-                    ]
+                    children: ['file 2_1_1.pdf']
                 },
                 '22_34': {
                     name: 'Folder 2_1_2',
                     parentId: 22,
                     id: 34,
-                    children: [
-                        'file 2_1_2.pdf'
-                    ]
+                    children: ['file 2_1_2.pdf']
                 }
             },
-            files: {
+            fileTypes: {
                 html: 'mdi-language-html5',
                 js: 'mdi-nodejs',
                 json: 'mdi-code-json',
@@ -199,10 +229,82 @@ export default {
                 txt: 'mdi-file-document-outline',
                 xls: 'mdi-file-excel',
                 doc: 'mdi-file-word',
-                docx: 'mdi-file-word',
+                docx: 'mdi-file-word'
             },
             abc: [],
             abc3: [],
+            items: [
+                {
+                    id: 1,
+                    name: 'Applications :',
+                    children: [
+                        { id: 2, name: 'Calendar : app' },
+                        { id: 3, name: 'Chrome : app' },
+                        { id: 4, name: 'Webstorm : app' }
+                    ]
+                },
+                {
+                    id: 5,
+                    name: 'Documents :',
+                    children: [
+                        {
+                            id: 6,
+                            name: 'vuetify :',
+                            children: [
+                                {
+                                    id: 7,
+                                    name: 'src :',
+                                    children: [
+                                        { id: 8, name: 'index : ts' },
+                                        { id: 9, name: 'bootstrap : ts' }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            id: 10,
+                            name: 'material2 :',
+                            children: [
+                                {
+                                    id: 11,
+                                    name: 'src :',
+                                    children: [
+                                        { id: 12, name: 'v-btn : ts' },
+                                        { id: 13, name: 'v-card : ts' },
+                                        { id: 14, name: 'v-window : ts' }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: 15,
+                    name: 'Downloads :',
+                    children: [
+                        { id: 16, name: 'October : pdf' },
+                        { id: 17, name: 'November : pdf' },
+                        { id: 18, name: 'Tutorial : html' }
+                    ]
+                },
+                {
+                    id: 19,
+                    name: 'Videos :',
+                    children: [
+                        {
+                            id: 20,
+                            name: 'Tutorials :',
+                            children: [
+                                { id: 21, name: 'Basic layouts : mp4' },
+                                { id: 22, name: 'Advanced techniques : mp4' },
+                                { id: 23, name: 'All about app : dir' }
+                            ]
+                        },
+                        { id: 24, name: 'Intro : mov' },
+                        { id: 25, name: 'Conference introduction : avi' }
+                    ]
+                }
+            ]
         }
     },
     computed: {
@@ -214,7 +316,7 @@ export default {
             // return this.data3[0]['children'].map(function (x) {
             //     return x.name
             // })
-        },
+        }
     },
     methods: {
         listToTree(list) {
@@ -253,11 +355,13 @@ export default {
             // this.abc3 = this.def['0_Folder 1']
             // this.abc3 = 'abc3'
             // return
+            // this.abc3 = this.data3.map(a => a.name)
             if (items && items.length > 0) {
                 const currentDirectory = items[items.length - 1]
                 console.log('currentDirectory.name: ', currentDirectory.name)
                 console.log('currentDirectory: ', currentDirectory)
-                this.abc3 = this.def[`${currentDirectory.parentId}_${currentDirectory.id}`]['children']
+                // this.abc3 = this.def[`${currentDirectory.parentId}_${currentDirectory.id}`]['children']
+                this.abc3 = this.directoriesList[`${currentDirectory.name}`]['children']
                 // const abc = this.data3.flatMap((a) => a.children)
                 // const abc = this.data3.find((product) => {
                 //     return product.children.some((item) => {
@@ -265,13 +369,13 @@ export default {
                 //     })
                 // })
                 // let abc = []
-                let findDeep = function (data, activity) {
-                    return data.some(function (e) {
-                        if (e.name == activity) {
-                            abc.push(data)
-                        } else if (e.children) return findDeep(e.children, activity)
-                    })
-                }
+                // let findDeep = function (data, activity) {
+                //     return data.some(function (e) {
+                //         if (e.name == activity) {
+                //             abc.push(data)
+                //         } else if (e.children) return findDeep(e.children, activity)
+                //     })
+                // }
                 // console.log(findDeep(this.data3, currentDirectory.name))
 
                 // const abc = this.data3.find(a => a.name == 'Folder 2_2' && a.parentId == 22)
@@ -283,6 +387,28 @@ export default {
                 this.abc3 = this.data3.map(a => a.name)
             }
         },
+        navigateTo2(items) {
+            console.log('navigateTo2: ', items)
+        },
+        navigateTo3(item, open) {
+            console.log('navigateTo3: ', item, open)
+            console.log('item.name: ', item.name)
+            if (item && open == false) {
+                console.log('Move to children')
+                const currentDirectory = item.name
+                console.log('currentDirectory: ', currentDirectory)
+                this.abc3 = this.directoriesList[`${currentDirectory}`]['children']
+            } else if (item.parentName) {
+                console.log('Move to parent')
+                this.abc3 = this.directoriesList[item.parentName]['children']
+            } else {
+                console.log('Move to root')
+                this.abc3 = this.data3.map(a => a.name)
+            }
+        },
+        fetch2 () {
+            console.log('fetch')
+        },
         async download(file) {
             try {
                 console.log('download file: ', file)
@@ -293,8 +419,8 @@ export default {
                 console.log('error: ', error)
                 alert('Sorry, an error occured when trying to download file.')
             }
-        },
-    },
+        }
+    }
     // watch: {
     //     tree3(newValue) {
     //         console.log('[watch] tree3: ', newValue)
