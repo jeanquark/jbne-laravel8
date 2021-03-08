@@ -6,10 +6,11 @@
         files: {{ files }}<br /><br />
         directoriesList: {{ directoriesList }}<br /><br />
         data3: {{ data3 }}<br /><br />
+        <!-- <div v-for="(item, index) in data3" :key="index"> {{ index }} -- {{ item }} <br /><br /></div><br /><br /> -->
+        data4: {{ data4 }}<br /><br />
         selection: {{ selection }}<br /><br />
         selectedParents: {{ selectedParents }}<br /><br />
         opened: {{ opened }}<br /><br />
-        <!-- <div v-for="(item, index) in data3" :key="index">{{ item }} <br /><br /></div> -->
         <!-- <br /><br /> -->
         <!-- entries3: {{ entries3 }}<br /><br /> -->
         <!-- def: {{ def }}<br /><br /> -->
@@ -18,25 +19,25 @@
         <!-- <a href="/images/1920x1080.jpg" download>Download image</a> -->
         <!-- <a href="/storage/app/files/768x600.jpg" download>Download image 2</a> -->
 
-        <v-treeview :items="items" item-key="id" :open="[1]" @update:open="navigateTo2"></v-treeview>
+        <!-- <v-treeview :items="items" item-key="id" :open="[1]" @update:open="navigateTo2"></v-treeview> -->
 
-        <br /><br />
+        <!-- <br /><br /> -->
 
         <!-- <v-treeview :items="data3" item-key="name" :return-object="true" :hoverable="true" :activatable="false" :open-on-click="true" :multiple-active="false" @update:open="navigateTo" v-model="selection"> -->
-        <v-treeview :items="data3" item-key="name" :return-object="true" :hoverable="true" :open-on-click="true" :multiple-active="false" @click="fetch2()">
-            <template v-slot:prepend="{ item, open }" >
-                <v-icon @click="navigateTo3(item, open)" v-if="!item.file">
+        <v-treeview :items="data3" item-key="name" :return-object="true" :hoverable="true" :open-on-click="true" :multiple-active="false">
+            <template v-slot:prepend="{ item, open }">
+                <v-icon @click="navigateTo3(item, open)" v-if="!item.file" style="border: 1px solid red;">
                     {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
                 </v-icon>
                 <v-icon v-else>
                     {{ fileTypes[item.file] }}
                 </v-icon>
             </template>
-            <template v-slot:label="{ item, open }" >
+            <template v-slot:label="{ item, open }">
                 <span v-if="item.file" class="file" @click="download(item)">
                     {{ item.name }}
                 </span>
-                <span @click="navigateTo3(item, open)" v-else>
+                <span @click="navigateTo3(item, open)" style="border: 1px dashed green;" v-else>
                     {{ item.name }}
                 </span>
             </template>
@@ -70,20 +71,34 @@ export default {
         // console.log('parseInt(00): ', parseInt(00))
         for (let i = 0; i < this.directories.length; i++) {
             const separator = this.directories[i].split('/')
-            // console.log('separator: ', separator)
+            console.log('separator: ', separator)
             if (!this.directoriesList[separator[separator.length - 1]]) {
                 this.directoriesList[`${separator[separator.length - 1]}`] = {
                     name: separator[separator.length - 1],
+                    id: i + 1,
+                    parentId: this.directoriesList[separator[separator.length - 2]] ? this.directoriesList[separator[separator.length - 2]]['id'] : 0,
                     children: []
                 }
             }
             if (separator[separator.length - 2]) {
-                // console.log('Add to children array: ', separator[separator.length - 1])
                 this.directoriesList[separator[separator.length - 2]]['children'].push(separator[separator.length - 1])
             }
-            // for (let j = 0; j < separator.length; j++) {
-            //     const id = parseInt(`${j + 1}${i + 1}`)
-            // }
+            
+            let parent
+            if (separator.length == 1) {
+                this.data4.push({
+                    name: this.directoriesList[separator]['name'],
+                    id: this.directoriesList[separator]['id'],
+                    parentId: this.directoriesList[separator]['parentId'],
+                    children: []
+                })
+            } else {
+                const parentIndex = this.data4.findIndex(folder => folder.name == separator[separator.length - 2])
+                console.log('parentIndex: ', parentIndex)
+                // this.data4[parentIndex]['children'].push({
+                //     name: 'abc'
+                // })
+            }
         }
 
         for (let i = 0; i < this.files.length; i++) {
@@ -101,23 +116,40 @@ export default {
             }
             let overrideParentId = false
             let newParentId
+
             for (let j = 0; j < separator.length; j++) {
                 // console.log("separator[j]: ", separator[j])
                 // console.log("separator[j+1]: ", separator[j+1])
+                if (this.directoriesList[separator[j]]) {
+                    // console.log('file: ', this.directoriesList[separator[j]])
+                    // console.log('file id: ', this.directoriesList[separator[j]]['id'])
+                }
+                if (separator[j - 1]) {
+                    // console.log('file name: ', separator[j])
+                    // console.log('parentId: ', this.directoriesList[separator[j - 1]]['id'])
+                }
+                // console.log(`File ${separator[j]} has an id of ${this.directoriesList[separator[j]] ? this.directoriesList[separator[j]]['id'] : null} and a parentId of ${separator[j - 1] ? this.directoriesList[separator[j - 1]]['id'] : 0}`)
                 let id = parseInt(`${j + 1}${i + 1}`)
                 let parentId = overrideParentId ? newParentId : parseInt(`${j < 1 ? 0 : j}${j < 1 ? 0 : i + 1}`)
+
+                id = this.directoriesList[separator[j]] && this.directoriesList[separator[j]]['id'] ? this.directoriesList[separator[j]]['id'] : 0
+                parentId = separator[j - 1] ? this.directoriesList[separator[j - 1]]['id'] : 0
                 let parentName = separator[j-1] ? separator[j-1] : null
                 let file
+
+
 
                 // if (!this.def[`${parentId}_${separator[j]}`]) {
                 // this.def.find()
                 // console.log('Created ', parentId, separator[j])
-                this.def[`${parentId}_${id}`] = {
-                    name: separator[j],
-                    parentId,
-                    id,
-                    children: [separator[j + 1] ? separator[j + 1] : '']
-                }
+
+                // this.def[`${parentId}_${id}`] = {
+                //     name: separator[j],
+                //     parentId,
+                //     id,
+                //     children: [separator[j + 1] ? separator[j + 1] : '']
+                // }
+
                 // this.def[`${parentId}_${id}`]['children'] ? this.def[`${parentId}_${id}`]['children'].push(separator[j+1]) : this.def[`${parentId}_${id}`]['children'] = []
                 // } else {
                 //     console.log('Already exists ', separator[j+1])
@@ -139,9 +171,10 @@ export default {
                 }
                 this.entries3.push({
                     name: separator[j],
-                    // level: j,
                     id: id.toString(),
+                    // id,
                     parentId: parentId.toString(),
+                    // parentId,
                     parentName,
                     path: this.files[i],
                     file,
@@ -169,6 +202,7 @@ export default {
             directoriesList: {},
             selectedParents: [],
             data3: [],
+            data4: [],
             // tree: [],
             selection: [],
             entries3: [],
