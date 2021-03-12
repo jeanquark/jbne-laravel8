@@ -22,7 +22,7 @@ export const actions = {
 	async fetchFiles ({ commit }, payload) {
 		console.log('[VUEX] fetchFiles: ', payload)
         const { data } = await axios.get(`/api/v1/files`)
-        console.log('data: ', data)
+        // console.log('data: ', data)
         return data
 		commit('SET_FILES', { data })
     },
