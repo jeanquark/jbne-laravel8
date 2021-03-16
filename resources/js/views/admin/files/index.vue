@@ -91,6 +91,7 @@ export default {
                     parentId,
                     children: [],
                 }
+                index++
 
                 if (separator[separator.length - 3]) {
                     // By name
@@ -123,87 +124,81 @@ export default {
                 }
             }
 
-            // children2 = []
-
             this.directoriesArray.push({
                 name: separator[separator.length - 1],
                 id,
-                parentId,
-                // children: []
+                parentId
             })
-            // continue
-
-            // if (separator[separator.length - 2]) {
-            //     if (separator[separator.length - 3]) {
-            //         parentId = this.directoriesObject[`${separator[separator.length - 3]}/${separator[separator.length - 2]}`]['id']
-
-            //         this.directoriesObject[`${separator[separator.length - 3]}/${separator[separator.length - 2]}`]['children'].push(separator[separator.length - 1])
-            //     } else {
-            //         parentId = this.directoriesObject[separator[separator.length - 2]]['id']
-
-            //         this.directoriesObject[separator[separator.length - 2]]['children'].push(separator[separator.length - 1])
-            //     }
-            //     if (!this.directoriesObject[`${separator[separator.length - 2]}/${separator[separator.length - 1]}`]) {
-            //         this.directoriesObject[`${separator[separator.length - 2]}/${separator[separator.length - 1]}`] = {
-            //             name: separator[separator.length - 1],
-            //             id,
-            //             parentId,
-            //             children: [],
-            //         }
-            //         index++
-            //     }
-            // } else {
-            //         this.directoriesObject[`${separator[separator.length - 1]}`] = {
-            //             name: separator[separator.length - 1],
-            //             id,
-            //             parentId,
-            //             children: [],
-            //         }
-            //         index++
-            // }
-
-            // this.directoriesArray.push({
-            //     name: separator[separator.length - 1],
-            //     id,
-            //     parentId,
-            // })
         }
 
         // Loop through files
-        // for (let i = 0; i < this.files.length; i++) {
-        //     separator = this.files[i].split('/')
-        //     this.filesObject[separator[separator.length - 1]] = {
-        //         name: separator[separator.length - 1],
-        //         path: this.files[i]
-        //     }
+        for (let i = 0; i < this.files.length; i++) {
+            separator = this.files[i].split('/')
+            console.log('separator: ', separator)
 
-        //     if (separator[separator.length - 2]) {
-        //         this.directoriesObject[separator[separator.length - 2]]['children'].push(separator[separator.length - 1])
-        //         this.directoriesArray.push({
-        //             name: separator[separator.length - 1],
-        //             id: index + 1,
-        //             // parentId: this.directoriesObject[separator[separator.length - 1]]
-        //             parentId: this.directoriesObject[separator[separator.length - 2]]['id'],
-        //             path: this.files[i],
-        //             file: true,
-        //         })
-        //     } else {
-        //         this.directoriesObject[separator[separator.length - 1]] = {
-        //             name: separator[separator.length - 1],
-        //             id: index + 1,
-        //             parentId: 0,
-        //             file: true,
-        //         }
-        //         this.directoriesArray.push({
-        //             name: separator[separator.length - 1],
-        //             id: index + 1,
-        //             parentId: 0,
-        //             path: this.files[i],
-        //             file: true,
-        //         })
-        //     }
-        //     index++
-        // }
+            if (separator[separator.length - 2]) {
+                if (separator[separator.length - 3]) {
+                    parentId = this.directoriesObject[`${separator[separator.length - 3]}_${separator[separator.length - 2]}`]['id']
+                    // By name
+                    this.directoriesObject[`${separator[separator.length - 3]}_${separator[separator.length - 2]}`]['children'].push(separator[separator.length - 1])
+
+                    // By id
+                    const grandParentId = this.directoriesObject[`${separator[separator.length - 3]}_${separator[separator.length - 2]}`]['parentId']
+                    this.directoriesObjectById[`${grandParentId}_${parentId}`]['children'].push(separator[separator.length - 1])
+
+                    // Array
+                    this.directoriesArray.push({
+                        name: separator[separator.length - 1],
+                        id: index + 1,
+                        parentId: this.directoriesObject[`${separator[separator.length - 3]}_${separator[separator.length - 2]}`]['id'],
+                        path: this.files[i],
+                        file: true,
+                    })
+                } else {
+                    parentId = this.directoriesObject[`${separator[separator.length - 2]}`]['id']
+                    // By name
+                    this.directoriesObject[`${separator[separator.length - 2]}`]['children'].push(separator[separator.length - 1])
+
+                    // By id
+                    const grandParentId = this.directoriesObject[`${separator[separator.length - 2]}`]['parentId']
+                    this.directoriesObjectById[`${grandParentId}_${parentId}`]['children'].push(separator[separator.length - 1])
+
+                    // Array
+                    this.directoriesArray.push({
+                        name: separator[separator.length - 1],
+                        id: index + 1,
+                        parentId: this.directoriesObject[`${separator[separator.length - 2]}`]['id'],
+                        path: this.files[i],
+                        file: true,
+                    })
+                }
+            } else {
+                parentId = 0
+                // By name
+                this.directoriesObject[`${separator[separator.length - 1]}`] = {
+                    name: separator[separator.length - 1],
+                    id,
+                    parentId
+                }
+
+                // By id
+                this.directoriesObjectById[`${parentId}_${id}`] = {
+                    name: separator[separator.length - 1],
+                    id,
+                    parentId
+                }
+
+                // Array
+                this.directoriesArray.push({
+                    name: separator[separator.length - 1],
+                    id: index + 1,
+                    parentId: 0,
+                    path: this.files[i],
+                    file: true,
+                })
+            }
+            index++
+        }
 
         // Create nested array
         this.items = this.listToTree(this.directoriesArray)
