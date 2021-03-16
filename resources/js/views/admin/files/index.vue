@@ -4,38 +4,46 @@
         directories: {{ directories }}<br /><br />
         files: {{ files }}<br /><br />
         directoriesObject: {{ directoriesObject }}<br /><br />
+        directoriesObjectById: {{ directoriesObjectById }}<br /><br />
         directoriesArray: {{ directoriesArray }}<br /><br />
-        items2: {{ items2 }}<br /><br />
+        directoriesArray2: {{ directoriesArray2 }}<br /><br />
+        <!-- filesArray: {{ filesArray }}<br /><br /> -->
+        filesObject: {{ filesObject }}<br /><br />
+        idsObject: {{ idsObject }}<br /><br />
+        items: {{ items }}<br /><br />
         rootFolder: {{ rootFolder }}<br /><br />
         directoriesObject:<br />
-        <div v-for="(item, index) in directoriesObject" :key="index">{{ index }} ---> {{ item }} <br /><br /></div>
+        <div v-for="(item, index) in directoriesObject" :key="index">{{ index }} --- {{ item }} <br /><br /></div>
         <br /><br />
         currentFolder: {{ currentFolder }}<br />
         opened: {{ opened }}<br />
+        openedId: {{ openedId }}<br />
         difference: {{ difference }}<br />
+        differenceId: {{ differenceId }}<br />
         goTo: {{ goTo }}<br />
         <v-row no-gutters>
-            <v-col cols="4" style="border: 1px solid orange;">
-                <v-treeview shaped hoverable open-on-click return-object :items="items2" item-key="name" @update:open="updateOpen">
+            <v-col cols="4" style="border: 1px solid orange">
+                <v-treeview shaped hoverable open-on-click return-object :items="items" item-key="name" @update:open="updateOpen">
                     <template v-slot:label="{ item }">
                         <span v-if="item.file" class="file" @click="download(item)">
                             {{ item.name }}
                         </span>
-                        <span style="border: 1px dashed green;" v-else>
+                        <span style="border: 1px dashed green" v-else>
                             {{ item.name }}
                         </span>
                     </template>
                 </v-treeview>
             </v-col>
-            <v-col cols="8" style="border: 1px solid purple;">
-                <v-btn small @click="goBack" v-if="currentFolder">&larr; Back</v-btn>
+            <v-col cols="8" style="border: 1px solid purple">
+                currentFolder: {{ currentFolder }}<br />
+                <v-btn small @click="navigateBack" v-if="currentFolder">&larr; Back</v-btn>
                 <span v-if="currentFolder">Content of {{ currentFolder['name'] }}:</span>
                 <span v-else>Content of root</span>
                 <div class="item" v-if="currentFolder">
-                    <div style="border: 1px solid red; margin: 10px;" v-for="(item, index) in currentFolder.children" :key="index" @click="selectFolder(item)">item: {{ item }}</div>
+                    <div style="border: 1px solid red; margin: 10px" v-for="(item, index) in currentFolder.children" :key="index" @click="selectFolder(item)">{{ item }}</div>
                 </div>
                 <div class="item" v-else>
-                    <div style="border: 1px dashed red; margin: 10px;" v-for="(item, index) in rootFolder" :key="index" @click="selectFolder(item)">item: {{ item }}</div>
+                    <div style="border: 1px dashed blue; margin: 10px" v-for="(item, index) in rootFolder" :key="index" @click="selectFolder(item)">{{ item }}</div>
                 </div>
             </v-col>
         </v-row>
@@ -43,6 +51,7 @@
 </template>
 
 <script>
+import fileDownload from 'js-file-download'
 export default {
     name: 'AdminFilesIndex',
     async created() {
@@ -52,79 +61,152 @@ export default {
         this.files = data['files']
 
         let separator
-        let index2 = 0
+        let index = 0
+        let id
+        let parentId
+        let children2 = []
         // Loop through directories
         for (let i = 0; i < this.directories.length; i++) {
+            // console.log('directories[i]: ', this.directories[i])
             separator = this.directories[i].split('/')
             // console.log('separator: ', separator)
-            if (!this.directoriesObject[separator[separator.length - 1]]) {
+            id = i + 1
+            if (separator[separator.length - 2]) {
+                if (separator[separator.length - 3]) {
+                    parentId = this.directoriesObject[`${separator[separator.length - 3]}_${separator[separator.length - 2]}`]['id']
+                } else {
+                    parentId = this.directoriesObject[`${separator[separator.length - 2]}`]['id']
+                }
+                // console.log('childen: ', children)
+                this.directoriesObject[`${separator[separator.length - 2]}_${separator[separator.length - 1]}`] = {
+                    name: separator[separator.length - 1],
+                    id,
+                    parentId,
+                    children: [],
+                }
+
+                this.directoriesObjectById[`${parentId}_${id}`] = {
+                    name: separator[separator.length - 1],
+                    id,
+                    parentId,
+                    children: [],
+                }
+
+                if (separator[separator.length - 3]) {
+                    // By name
+                    this.directoriesObject[`${separator[separator.length - 3]}_${separator[separator.length - 2]}`]['children'].push(separator[separator.length - 1])
+
+                    // By id
+                    const grandParentId = this.directoriesObject[`${separator[separator.length - 3]}_${separator[separator.length - 2]}`]['parentId']
+                    this.directoriesObjectById[`${grandParentId}_${parentId}`]['children'].push(separator[separator.length - 1])
+                } else {
+                    // By name
+                    this.directoriesObject[`${separator[separator.length - 2]}`]['children'].push(separator[separator.length - 1])
+
+                    // By id
+                    const grandParentId = this.directoriesObject[`${separator[separator.length - 2]}`]['parentId']
+                    this.directoriesObjectById[`${grandParentId}_${parentId}`]['children'].push(separator[separator.length - 1])
+                }
+            } else {
+                parentId = 0
                 this.directoriesObject[`${separator[separator.length - 1]}`] = {
                     name: separator[separator.length - 1],
-                    id: i + 1,
-                    parentId: this.directoriesObject[separator[separator.length - 2]] ? this.directoriesObject[separator[separator.length - 2]]['id'] : 0,
-                    children: []
+                    id,
+                    parentId,
+                    children: [],
                 }
-                index2++
-                this.directoriesArray.push({
+                this.directoriesObjectById[`${parentId}_${id}`] = {
                     name: separator[separator.length - 1],
-                    id: i + 1,
-                    parentId: this.directoriesObject[separator[separator.length - 2]] ? this.directoriesObject[separator[separator.length - 2]]['id'] : 0
-                    // children: []
-                })
+                    id,
+                    parentId,
+                    children: [],
+                }
             }
-            if (separator[separator.length - 2]) {
-                this.directoriesObject[separator[separator.length - 2]]['children'].push(separator[separator.length - 1])
-            }
+
+            // children2 = []
+
+            this.directoriesArray.push({
+                name: separator[separator.length - 1],
+                id,
+                parentId,
+                // children: []
+            })
+            // continue
+
+            // if (separator[separator.length - 2]) {
+            //     if (separator[separator.length - 3]) {
+            //         parentId = this.directoriesObject[`${separator[separator.length - 3]}/${separator[separator.length - 2]}`]['id']
+
+            //         this.directoriesObject[`${separator[separator.length - 3]}/${separator[separator.length - 2]}`]['children'].push(separator[separator.length - 1])
+            //     } else {
+            //         parentId = this.directoriesObject[separator[separator.length - 2]]['id']
+
+            //         this.directoriesObject[separator[separator.length - 2]]['children'].push(separator[separator.length - 1])
+            //     }
+            //     if (!this.directoriesObject[`${separator[separator.length - 2]}/${separator[separator.length - 1]}`]) {
+            //         this.directoriesObject[`${separator[separator.length - 2]}/${separator[separator.length - 1]}`] = {
+            //             name: separator[separator.length - 1],
+            //             id,
+            //             parentId,
+            //             children: [],
+            //         }
+            //         index++
+            //     }
+            // } else {
+            //         this.directoriesObject[`${separator[separator.length - 1]}`] = {
+            //             name: separator[separator.length - 1],
+            //             id,
+            //             parentId,
+            //             children: [],
+            //         }
+            //         index++
+            // }
+
+            // this.directoriesArray.push({
+            //     name: separator[separator.length - 1],
+            //     id,
+            //     parentId,
+            // })
         }
 
         // Loop through files
-        for (let i = 0; i < this.files.length; i++) {
-            separator = this.files[i].split('/')
-            if (separator[separator.length - 2]) {
-                this.directoriesObject[separator[separator.length - 2]]['children'].push(separator[separator.length - 1])
-                this.directoriesArray.push({
-                    name: separator[separator.length - 1],
-                    id: index2 + 1,
-                    // parentId: this.directoriesObject[separator[separator.length - 1]]
-                    parentId: this.directoriesObject[separator[separator.length - 2]]['id']
-                })
-                // index2++
-            } else {
-                this.directoriesObject[separator[separator.length - 1]] = {
-                    name: separator[separator.length - 1],
-                    id: index2 + 1,
-                    parentId: 0
-                }
-                this.directoriesArray.push({
-                    name: separator[separator.length - 1],
-                    id: index2 + 1,
-                    parentId: 0
-                })
-                // index2++
-            }
-            index2++
-        }
+        // for (let i = 0; i < this.files.length; i++) {
+        //     separator = this.files[i].split('/')
+        //     this.filesObject[separator[separator.length - 1]] = {
+        //         name: separator[separator.length - 1],
+        //         path: this.files[i]
+        //     }
 
-        // Create nested array
-        this.items2 = this.listToTree(this.directoriesArray)
-
-        // for (let entry in this.directoriesObject) {
-        //     console.log('entry: ', entry)
-        //     if (this.directoriesObject[entry]['parentId'] == 0) {
-        //         this.items2.push({
-        //             id: this.directoriesObject[entry]['id'] ? this.directoriesObject[entry]['id'] : null,
-        //             parentId: this.directoriesObject[entry]['parentId'],
-        //             name: entry,
-        //             children: []
+        //     if (separator[separator.length - 2]) {
+        //         this.directoriesObject[separator[separator.length - 2]]['children'].push(separator[separator.length - 1])
+        //         this.directoriesArray.push({
+        //             name: separator[separator.length - 1],
+        //             id: index + 1,
+        //             // parentId: this.directoriesObject[separator[separator.length - 1]]
+        //             parentId: this.directoriesObject[separator[separator.length - 2]]['id'],
+        //             path: this.files[i],
+        //             file: true,
         //         })
         //     } else {
-        //         const abc = this.items2.find(item => item.id == this.directoriesObject[entry]['parentId'])
-        //         console.log('abc: ', abc)
+        //         this.directoriesObject[separator[separator.length - 1]] = {
+        //             name: separator[separator.length - 1],
+        //             id: index + 1,
+        //             parentId: 0,
+        //             file: true,
+        //         }
+        //         this.directoriesArray.push({
+        //             name: separator[separator.length - 1],
+        //             id: index + 1,
+        //             parentId: 0,
+        //             path: this.files[i],
+        //             file: true,
+        //         })
         //     }
-        //     // abc['children'].push('abc')
-        //     // this.items2.find(item => item.children.some(item => item.name === 'milk'));
-
+        //     index++
         // }
+
+        // Create nested array
+        this.items = this.listToTree(this.directoriesArray)
     },
     mounted() {},
     data() {
@@ -132,123 +214,54 @@ export default {
             directories: [],
             files: [],
             directoriesObject: {},
+            directoriesObjectById: {},
             directoriesArray: [],
+            directoriesArray2: [],
+            // filesArray: [],
+            filesObject: {},
+            idsObject: {},
             currentFolder: null,
-            // currentFolder: {
-            //     children: []
-            // },
-            items: [
-                {
-                    id: 1,
-                    name: 'Applications',
-                    children: [
-                        { id: 2, name: 'calendar.php' },
-                        { id: 3, name: 'chrome.php' },
-                        { id: 4, name: 'webstorm.php' }
-                    ]
-                },
-                {
-                    id: 5,
-                    name: 'Documents',
-                    children: [
-                        {
-                            id: 6,
-                            name: 'Vuetify',
-                            children: [
-                                {
-                                    id: 7,
-                                    name: 'Src',
-                                    children: [
-                                        { id: 8, name: 'index.php' },
-                                        { id: 9, name: 'bootstrap.php' }
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            id: 10,
-                            name: 'Material',
-                            children: [
-                                {
-                                    id: 11,
-                                    name: 'Src',
-                                    children: [
-                                        { id: 12, name: 'v-btn.php' },
-                                        { id: 13, name: 'v-card.php' },
-                                        { id: 14, name: 'v-window.php' }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    id: 15,
-                    name: 'Downloads',
-                    children: [
-                        { id: 16, name: 'october.pdf' },
-                        { id: 17, name: 'november.pdf' },
-                        { id: 18, name: 'tutorial.html' }
-                    ]
-                },
-                {
-                    id: 19,
-                    name: 'Videos',
-                    children: [
-                        {
-                            id: 20,
-                            name: 'Tutorials',
-                            children: [
-                                { id: 21, name: 'basic-layouts.mp4' },
-                                { id: 22, name: 'advanced-techniques.mp4' },
-                                { id: 23, name: 'all-about-app.mp4' }
-                            ]
-                        },
-                        { id: 24, name: 'intro.pdf' },
-                        { id: 25, name: 'conference-introduction.pdf' }
-                    ]
-                }
-            ],
-            items2: [],
+            items: [],
             active: [],
             opened: [],
+            openedId: [],
             selectedItem: null,
             difference: null,
-            goTo: null
+            differenceId: null,
+            goTo: null,
         }
     },
     computed: {
         rootFolder() {
-            return this.items2.map(a => a.name)
-        }
+            return this.items.map((a) => a.name)
+        },
     },
     methods: {
         updateOpen(items) {
             console.log('updateOpen items: ', items)
-            // console.log('opened: ', this.opened)
-            console.log('abc: ', items[items.length - 1])
-            if (this.opened.length > 0) {
-                this.difference = this.opened.filter(x => !items.map(item => item.name).includes(x))[0]
+            console.log('openedId: ', this.openedId)
+            if (items && items.length > 0) {
+                const { parentId, id } = items[items.length - 1]
+                this.currentFolder = this.directoriesObjectById[`${parentId}_${id}`]
             }
-            this.opened = items.map(item => item.name)
-            if (this.difference) {
-                // this.goTo = this.difference + ' parent'
-                // this.currentFolder = this.directoriesObject[this.difference]
-                const parentId = this.directoriesObject[this.difference]['parentId']
-                console.log('parentId : ', parentId)
-                if (parentId != 0) {
-                    const parentFolder = this.directoriesArray.find(x => x.id == parentId)
-                    this.goTo = parentFolder['name']
-                    this.currentFolder = this.directoriesObject[this.goTo]
-                } else {
-                    this.goTo = null
+            if (this.opened.length > 0) {
+                this.difference = this.opened.filter((x) => !items.map((item) => item.name).includes(x))[0]
+
+                this.differenceId = this.openedId.filter(function (obj) {
+                    return !items.some(function (obj2) {
+                        return obj.name == obj2.name
+                    })
+                })
+            }
+            this.opened = items.map((item) => item.name)
+            this.openedId = items.map(({ name, id, parentId }) => ({ name, id, parentId }))
+            if (this.differenceId && this.differenceId.length > 0) {
+                const { parentId } = this.differenceId[0]
+                if (parentId == 0) {
                     this.currentFolder = null
                 }
-                console.log('goTo: ', this.goTo)
                 this.difference = null
-            } else {
-                this.goTo = this.opened[this.opened.length - 1]
-                this.currentFolder = this.directoriesObject[this.goTo]
+                this.differenceId = null
             }
         },
         listToTree(list) {
@@ -275,22 +288,40 @@ export default {
         },
         selectFolder(item) {
             console.log('selectFolder: ', item)
-            this.currentFolder = this.directoriesObject[item]
+            const isFile = this.filesObject[item] ? true : false
+            console.log('isFile: ', isFile)
+            if (isFile) {
+                console.log('Download file')
+                this.download(this.filesObject[item])
+            } else {
+                this.currentFolder = this.directoriesObject[item]
+            }
         },
-        goBack() {
+        navigateBack() {
             try {
                 if (this.currentFolder.parentId == 0) {
                     this.currentFolder = null
                 } else {
-                    const parentFolder = this.directoriesArray.find(x => x.id == this.currentFolder.parentId)
+                    const parentFolder = this.directoriesArray.find((x) => x.id == this.currentFolder.parentId)
                     console.log('parentFolder: ', parentFolder)
                     this.currentFolder = this.directoriesObject[parentFolder['name']]
                 }
             } catch (error) {
                 console.log('error: ', error)
             }
-        }
-    }
+        },
+        async download(file) {
+            try {
+                console.log('download file: ', file)
+                const filePath = encodeURI(file.path)
+                const data = await this.$store.dispatch('files/fetchFile', { filePath })
+                fileDownload(data.data, file.name)
+            } catch (error) {
+                console.log('error: ', error)
+                alert('Sorry, an error occured when trying to download file.')
+            }
+        },
+    },
 }
 </script>
 

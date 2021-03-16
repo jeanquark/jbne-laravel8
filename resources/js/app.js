@@ -30,9 +30,9 @@ const app = new Vue({
     vuetify,
     components: { App },
     created() {
-        console.log("created()");
+        // console.log("created()");
         // this.$store.commit("INCREMENT");
-        console.log("count: ", this.count);
+        // console.log("count: ", this.count);
     },
     mounted() {},
     data() {

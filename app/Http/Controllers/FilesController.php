@@ -46,10 +46,7 @@ class FilesController extends Controller
      */
     public function show($filePath)
     {
-        // return Storage::disk('files')->download(urldecode($filePath));
-        // return Storage::disk('files')->download('Folder 1/600x800.jpg');
-        // $file = urldecode($filePath);
-        // return response()->json($file);
+        return Storage::disk('files')->download(urldecode($filePath));
     }
 
     /**
