@@ -30,6 +30,13 @@ Route::middleware('role:student|lawyer')->get('/v1/files', [App\Http\Controllers
 
 // Permanences
 Route::apiResource('/v1/permanences', App\Http\Controllers\PermanencesController::class);
+
+Route::apiResource('/v1/folders', App\Http\Controllers\FoldersController::class);
+Route::post('/v1/folders/destroy', [
+    'as' => 'folders.destroy', 
+    'uses' => 'App\Http\Controllers\FoldersController@destroy'
+]);
+
 Route::apiResource('/v1/files', App\Http\Controllers\FilesController::class);
 Route::get('/v1/files/{file}', [App\Http\Controllers\FilesController::class, 'show'])->where('file', '.*');
 // Route::get('/v1/permanences', [App\Http\Controllers\PermanencesController::class, 'index']);

@@ -24,7 +24,6 @@ export const actions = {
         const { data } = await axios.get(`/api/v1/files`)
         // console.log('data: ', data)
         return data
-		commit('SET_FILES', { data })
     },
     async fetchFile({}, payload) {
         try {

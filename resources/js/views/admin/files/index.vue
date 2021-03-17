@@ -36,6 +36,8 @@
             </v-col>
             <v-col cols="8" style="border: 1px solid purple">
                 currentFolder: {{ currentFolder }}<br />
+                <v-btn small @click="createFolder">Create folder</v-btn>
+                <v-btn small @click="deleteFolder">Delete folder</v-btn>
                 <v-btn small @click="navigateBack" v-if="currentFolder">&larr; Back</v-btn>
                 <span v-if="currentFolder">Content of {{ currentFolder['name'] }}:</span>
                 <span v-else>Content of root</span>
@@ -55,16 +57,15 @@ import fileDownload from 'js-file-download'
 export default {
     name: 'AdminFilesIndex',
     async created() {
-        const data = await this.$store.dispatch('files/fetchFiles')
-        // console.log("data: ", data);
-        this.directories = data['directories']
-        this.files = data['files']
+        const { directories } = await this.$store.dispatch('folders/fetchFolders')
+        const { files } = await this.$store.dispatch('files/fetchFiles')
+        this.directories = directories
+        this.files = files
 
         let separator
         let index = 0
         let id
         let parentId
-        let children2 = []
         // Loop through directories
         for (let i = 0; i < this.directories.length; i++) {
             // console.log('directories[i]: ', this.directories[i])
@@ -203,7 +204,9 @@ export default {
         // Create nested array
         this.items = this.listToTree(this.directoriesArray)
     },
-    mounted() {},
+    // mounted() {
+    //     this.items = this.listToTree(this.directoriesArray)
+    // },
     data() {
         return {
             directories: [],
@@ -316,6 +319,24 @@ export default {
                 alert('Sorry, an error occured when trying to download file.')
             }
         },
+        async createFolder () {
+            try {
+                await this.$store.dispatch('folders/createFolder', { path: '/new folder/new folder2' })
+                alert('Folder created successfully!')
+            } catch (error) {
+                console.log('error: ', error)
+            }
+        },
+        async deleteFolder () {
+            try {
+                await this.$store.dispatch('folders/deleteFolder', { path: '/new folder/new folder3' })
+                alert('Folder deleted successfully!')
+            } catch (error) {
+                console.log('error: ', error)
+                console.log('error.response: ', error.response)
+                console.log('error.response.data: ', error.response.data)
+            }
+        }
     },
 }
 </script>

@@ -18,11 +18,11 @@ class FilesController extends Controller
     {
         // $files = Storage::disk('files')->get('Webstamps.pdf');
 
-        $directories = Storage::disk('files')->allDirectories();
+        // $directories = Storage::disk('files')->allDirectories();
         $files = Storage::disk('files')->allFiles();
 
         return response()->json([
-            'directories' => $directories,
+            // 'directories' => $directories,
             'files' => $files,
         ]);
     }
