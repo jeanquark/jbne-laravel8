@@ -37,6 +37,9 @@
                 <div class="item" v-else>
                     <div style="border: 1px dashed blue; margin: 10px" v-for="(item, index) in rootFolder" :key="index" @click="selectFolder(item)">{{ item }}</div>
                 </div>
+                <!-- <div class="item" v-if="currentFolder">
+                    <div style="border: 1px solid red; margin: 10px" v-for="(item, index) in currentFolder" :key="index" @click="selectFolder(item)">{{ item }}</div>
+                </div> -->
             </v-col>
         </v-row>
     </div>
@@ -84,19 +87,23 @@ export default {
                 path: this.directories[i],
                 id: index,
                 parentId,
-                length: separator.length
+                // length: separator.length,
             })
             this.directoriesObject[this.directories[i]] = {
                 name: separator[separator.length - 1],
                 path: this.directories[i],
                 id: index,
                 parentId,
-                length: separator.length,
-                children: []
+                // length: separator.length,
+                children: [],
             }
-            path = this.directories[i].substr(0, this.directories[i].lastIndexOf("\/"))
+            path = this.directories[i].substr(0, this.directories[i].lastIndexOf('/'))
             if (path) {
-                this.directoriesObject[path]['children'].push(separator[separator.length - 1])
+                // this.directoriesObject[path]['children'].push(separator[separator.length - 1])
+                this.directoriesObject[path]['children'].push({
+                    name: separator[separator.length - 1],
+                    // file: false
+                })
             }
         }
 
@@ -105,7 +112,7 @@ export default {
             separator = this.files[i].split('/')
             // console.log('separator: ', separator)
 
-            path = this.files[i].substr(0, this.files[i].lastIndexOf("\/"))
+            path = this.files[i].substr(0, this.files[i].lastIndexOf('/'))
             parentId = path ? this.directoriesObject[path]['id'] : 0
 
             this.directoriesArray.push({
@@ -113,15 +120,20 @@ export default {
                 id: index + 1,
                 parentId,
                 path: this.files[i],
-                file: true
+                file: true,
             })
             index++
 
             if (path) {
-                this.directoriesObject[path]['children'].push(separator[separator.length - 1])
+                // this.directoriesObject[path]['children'].push(separator[separator.length - 1])
+                this.directoriesObject[path]['children'].push({
+                    name: separator[separator.length - 1],
+                    file: true
+                })
             }
         }
 
+        // this.currentFolder = this.rootFolder
         // Create nested array
         // this.items = this.listToTree(this.directoriesArray)
     },
@@ -143,17 +155,17 @@ export default {
     },
     computed: {
         rootFolder() {
-            return this.items2.map((a) => a.name)
+            // return this.items2.map((a) => a.name)
+            return this.items2.map(({ name, file }) => ({ name, file }))
         },
-        items2 () {
+        items2() {
             return this.listToTree(this.directoriesArray)
             // return []
-        }
+        },
     },
     methods: {
         updateOpen(items) {
             console.log('updateOpen items: ', items)
-            console.log('openedId: ', this.openedId)
             if (items && items.length > 0) {
                 this.currentFolder = this.directoriesObject[items[items.length - 1]['path']]
             }
@@ -162,9 +174,8 @@ export default {
             }
             this.opened = items.map((item) => item.path)
             if (this.difference && this.difference.length > 0) {
-                let parent = this.difference.substr(0, this.difference.lastIndexOf("\/"))
+                let parent = this.difference.substr(0, this.difference.lastIndexOf('/'))
                 if (parent) {
-
                     this.currentFolder = this.directoriesObject[parent]
                 } else {
                     this.currentFolder = null
@@ -197,17 +208,62 @@ export default {
         selectFolder(item) {
             try {
                 console.log('selectFolder: ', item)
-                return
-                const isFile = this.filesObject[item] ? true : false
-                const { parentId, id } = this.filesObject[item]
-                console.log('isFile: ', isFile)
-                if (isFile) {
-                    console.log('Download file')
-                    this.download(this.filesObject[item])
+                let path
+                if (this.currentFolder) {
+                    path = `${this.currentFolder.path}/${item.name}`
                 } else {
-                    // this.currentFolder = this.directoriesObject[item]
-                    // this.currentFolder = this.directoriesObjectById[`${parentId}_${id}`]
+                    path = item.name
                 }
+                if (item.file) {
+                    console.log('Download file!')
+                    // this.currentFolder = this.directoriesObject[path]
+                    // path = `${this.currentFolder.path}/${item.name}`
+                    // console.log('path1: ', path)
+                    // this.download(path)
+                // } else if (this.currentFolder) {
+                //     path = `${this.currentFolder}/${item.name}`
+                //     this.currentFolder = this.directoriesObject[path]
+                //     console.log('path2: ', path)
+
+                } else {
+                    console.log('Move to folder', item.name)
+                    this.currentFolder = this.directoriesObject [path]
+                    // path = item.name
+                    // path = `${this.currentFolder.path}/${item.name}`
+                    // this.currentFolder = this.directoriesObject[path]
+                    // console.log('path3: ', path)
+
+                }
+                console.log('path: ', path)
+                return
+
+
+
+                // if (this.currentFolder) {
+                //     path = `${this.currentFolder.name}/${item}`
+                //     if (this.directoriesObject[path]) {
+                //         this.currentFolder = this.directoriesObject[path]
+                //     } else {
+                //         // this.download(path)
+                //     }
+                // } else {
+                //     path = item
+                //     this.currentFolder = this.directoriesObject[path]
+                // }
+                // console.log('path: ', path)
+                // return
+
+
+                // const isFile = this.filesObject[item] ? true : false
+                // const { parentId, id } = this.filesObject[item]
+                // console.log('isFile: ', isFile)
+                // if (isFile) {
+                //     console.log('Download file')
+                //     this.download(this.filesObject[item])
+                // } else {
+                //     // this.currentFolder = this.directoriesObject[item]
+                //     // this.currentFolder = this.directoriesObjectById[`${parentId}_${id}`]
+                // }
             } catch (error) {
                 console.log('error: ', error)
             }
@@ -228,6 +284,7 @@ export default {
         async download(file) {
             try {
                 console.log('download file: ', file)
+                return
                 const filePath = encodeURI(file.path)
                 const data = await this.$store.dispatch('files/fetchFile', { filePath })
                 fileDownload(data.data, file.name)
