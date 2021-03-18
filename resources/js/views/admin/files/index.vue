@@ -4,26 +4,16 @@
         directories: {{ directories }}<br /><br />
         files: {{ files }}<br /><br />
         directoriesObject: {{ directoriesObject }}<br /><br />
-        directoriesObjectById: {{ directoriesObjectById }}<br /><br />
         directoriesArray: {{ directoriesArray }}<br /><br />
-        directoriesArray2: {{ directoriesArray2 }}<br /><br />
-        <!-- filesArray: {{ filesArray }}<br /><br /> -->
-        filesObject: {{ filesObject }}<br /><br />
-        idsObject: {{ idsObject }}<br /><br />
-        items: {{ items }}<br /><br />
+        <!-- items: {{ items }}<br /><br /> -->
+        items2: {{ items2 }}<br /><br />
         rootFolder: {{ rootFolder }}<br /><br />
-        directoriesObject:<br />
-        <div v-for="(item, index) in directoriesObject" :key="index">{{ index }} --- {{ item }} <br /><br /></div>
-        <br /><br />
         currentFolder: {{ currentFolder }}<br />
         opened: {{ opened }}<br />
-        openedId: {{ openedId }}<br />
         difference: {{ difference }}<br />
-        differenceId: {{ differenceId }}<br />
-        goTo: {{ goTo }}<br />
         <v-row no-gutters>
             <v-col cols="4" style="border: 1px solid orange">
-                <v-treeview shaped hoverable open-on-click return-object :items="items" item-key="name" @update:open="updateOpen">
+                <v-treeview shaped hoverable open-on-click return-object :items="items2" item-key="name" @update:open="updateOpen">
                     <template v-slot:label="{ item }">
                         <span v-if="item.file" class="file" @click="download(item)">
                             {{ item.name }}
@@ -64,202 +54,122 @@ export default {
 
         let separator
         let index = 0
-        let id
         let parentId
+        let currentParentId
+        let currentLength
+        let obj = {}
+        let path
         // Loop through directories
         for (let i = 0; i < this.directories.length; i++) {
             // console.log('directories[i]: ', this.directories[i])
             separator = this.directories[i].split('/')
-            // console.log('separator: ', separator)
-            id = i + 1
-            if (separator[separator.length - 2]) {
-                if (separator[separator.length - 3]) {
-                    parentId = this.directoriesObject[`${separator[separator.length - 3]}_${separator[separator.length - 2]}`]['id']
-                } else {
-                    parentId = this.directoriesObject[`${separator[separator.length - 2]}`]['id']
-                }
-                // console.log('childen: ', children)
-                this.directoriesObject[`${separator[separator.length - 2]}_${separator[separator.length - 1]}`] = {
-                    name: separator[separator.length - 1],
-                    id,
-                    parentId,
-                    children: [],
-                }
-
-                this.directoriesObjectById[`${parentId}_${id}`] = {
-                    name: separator[separator.length - 1],
-                    id,
-                    parentId,
-                    children: [],
-                }
-                index++
-
-                if (separator[separator.length - 3]) {
-                    // By name
-                    this.directoriesObject[`${separator[separator.length - 3]}_${separator[separator.length - 2]}`]['children'].push(separator[separator.length - 1])
-
-                    // By id
-                    const grandParentId = this.directoriesObject[`${separator[separator.length - 3]}_${separator[separator.length - 2]}`]['parentId']
-                    this.directoriesObjectById[`${grandParentId}_${parentId}`]['children'].push(separator[separator.length - 1])
-                } else {
-                    // By name
-                    this.directoriesObject[`${separator[separator.length - 2]}`]['children'].push(separator[separator.length - 1])
-
-                    // By id
-                    const grandParentId = this.directoriesObject[`${separator[separator.length - 2]}`]['parentId']
-                    this.directoriesObjectById[`${grandParentId}_${parentId}`]['children'].push(separator[separator.length - 1])
-                }
-            } else {
+            // console.log('separator: ', separator)¨
+            if (separator.length === 1) {
                 parentId = 0
-                this.directoriesObject[`${separator[separator.length - 1]}`] = {
-                    name: separator[separator.length - 1],
-                    id,
-                    parentId,
-                    children: [],
-                }
-                this.directoriesObjectById[`${parentId}_${id}`] = {
-                    name: separator[separator.length - 1],
-                    id,
-                    parentId,
-                    children: [],
-                }
+                currentParentId = 0
+            } else if (separator.length === currentLength) {
+                parentId = currentParentId
+            } else if (separator.length === currentLength + 1) {
+                parentId = index
+                currentParentId = index
+                obj[separator.length] = currentParentId
+            } else if (separator.length === currentLength - 1) {
+                parentId = obj[separator.length]
             }
+            index++
+            currentLength = separator.length
 
             this.directoriesArray.push({
                 name: separator[separator.length - 1],
-                id,
-                parentId
+                path: this.directories[i],
+                id: index,
+                parentId,
+                length: separator.length
             })
+            this.directoriesObject[this.directories[i]] = {
+                name: separator[separator.length - 1],
+                path: this.directories[i],
+                id: index,
+                parentId,
+                length: separator.length,
+                children: []
+            }
+            path = this.directories[i].substr(0, this.directories[i].lastIndexOf("\/"))
+            if (path) {
+                this.directoriesObject[path]['children'].push(separator[separator.length - 1])
+            }
         }
 
         // Loop through files
         for (let i = 0; i < this.files.length; i++) {
             separator = this.files[i].split('/')
-            console.log('separator: ', separator)
+            // console.log('separator: ', separator)
 
-            if (separator[separator.length - 2]) {
-                if (separator[separator.length - 3]) {
-                    parentId = this.directoriesObject[`${separator[separator.length - 3]}_${separator[separator.length - 2]}`]['id']
-                    // By name
-                    this.directoriesObject[`${separator[separator.length - 3]}_${separator[separator.length - 2]}`]['children'].push(separator[separator.length - 1])
+            path = this.files[i].substr(0, this.files[i].lastIndexOf("\/"))
+            parentId = path ? this.directoriesObject[path]['id'] : 0
 
-                    // By id
-                    const grandParentId = this.directoriesObject[`${separator[separator.length - 3]}_${separator[separator.length - 2]}`]['parentId']
-                    this.directoriesObjectById[`${grandParentId}_${parentId}`]['children'].push(separator[separator.length - 1])
-
-                    // Array
-                    this.directoriesArray.push({
-                        name: separator[separator.length - 1],
-                        id: index + 1,
-                        parentId: this.directoriesObject[`${separator[separator.length - 3]}_${separator[separator.length - 2]}`]['id'],
-                        path: this.files[i],
-                        file: true,
-                    })
-                } else {
-                    parentId = this.directoriesObject[`${separator[separator.length - 2]}`]['id']
-                    // By name
-                    this.directoriesObject[`${separator[separator.length - 2]}`]['children'].push(separator[separator.length - 1])
-
-                    // By id
-                    const grandParentId = this.directoriesObject[`${separator[separator.length - 2]}`]['parentId']
-                    this.directoriesObjectById[`${grandParentId}_${parentId}`]['children'].push(separator[separator.length - 1])
-
-                    // Array
-                    this.directoriesArray.push({
-                        name: separator[separator.length - 1],
-                        id: index + 1,
-                        parentId: this.directoriesObject[`${separator[separator.length - 2]}`]['id'],
-                        path: this.files[i],
-                        file: true,
-                    })
-                }
-            } else {
-                parentId = 0
-                // By name
-                this.directoriesObject[`${separator[separator.length - 1]}`] = {
-                    name: separator[separator.length - 1],
-                    id,
-                    parentId
-                }
-
-                // By id
-                this.directoriesObjectById[`${parentId}_${id}`] = {
-                    name: separator[separator.length - 1],
-                    id,
-                    parentId
-                }
-
-                // Array
-                this.directoriesArray.push({
-                    name: separator[separator.length - 1],
-                    id: index + 1,
-                    parentId: 0,
-                    path: this.files[i],
-                    file: true,
-                })
-            }
+            this.directoriesArray.push({
+                name: separator[separator.length - 1],
+                id: index + 1,
+                parentId,
+                path: this.files[i],
+                file: true
+            })
             index++
+
+            if (path) {
+                this.directoriesObject[path]['children'].push(separator[separator.length - 1])
+            }
         }
 
         // Create nested array
-        this.items = this.listToTree(this.directoriesArray)
+        // this.items = this.listToTree(this.directoriesArray)
     },
-    // mounted() {
-    //     this.items = this.listToTree(this.directoriesArray)
-    // },
     data() {
         return {
             directories: [],
             files: [],
             directoriesObject: {},
-            directoriesObjectById: {},
             directoriesArray: [],
-            directoriesArray2: [],
-            // filesArray: [],
             filesObject: {},
+            filesArray: [],
             idsObject: {},
             currentFolder: null,
             items: [],
-            active: [],
             opened: [],
-            openedId: [],
             selectedItem: null,
             difference: null,
-            differenceId: null,
-            goTo: null,
         }
     },
     computed: {
         rootFolder() {
-            return this.items.map((a) => a.name)
+            return this.items2.map((a) => a.name)
         },
+        items2 () {
+            return this.listToTree(this.directoriesArray)
+            // return []
+        }
     },
     methods: {
         updateOpen(items) {
             console.log('updateOpen items: ', items)
             console.log('openedId: ', this.openedId)
             if (items && items.length > 0) {
-                const { parentId, id } = items[items.length - 1]
-                this.currentFolder = this.directoriesObjectById[`${parentId}_${id}`]
+                this.currentFolder = this.directoriesObject[items[items.length - 1]['path']]
             }
             if (this.opened.length > 0) {
-                this.difference = this.opened.filter((x) => !items.map((item) => item.name).includes(x))[0]
-
-                this.differenceId = this.openedId.filter(function (obj) {
-                    return !items.some(function (obj2) {
-                        return obj.name == obj2.name
-                    })
-                })
+                this.difference = this.opened.filter((x) => !items.map((item) => item.path).includes(x))[0]
             }
-            this.opened = items.map((item) => item.name)
-            this.openedId = items.map(({ name, id, parentId }) => ({ name, id, parentId }))
-            if (this.differenceId && this.differenceId.length > 0) {
-                const { parentId } = this.differenceId[0]
-                if (parentId == 0) {
+            this.opened = items.map((item) => item.path)
+            if (this.difference && this.difference.length > 0) {
+                let parent = this.difference.substr(0, this.difference.lastIndexOf("\/"))
+                if (parent) {
+
+                    this.currentFolder = this.directoriesObject[parent]
+                } else {
                     this.currentFolder = null
                 }
                 this.difference = null
-                this.differenceId = null
             }
         },
         listToTree(list) {
@@ -285,14 +195,21 @@ export default {
             return roots
         },
         selectFolder(item) {
-            console.log('selectFolder: ', item)
-            const isFile = this.filesObject[item] ? true : false
-            console.log('isFile: ', isFile)
-            if (isFile) {
-                console.log('Download file')
-                this.download(this.filesObject[item])
-            } else {
-                this.currentFolder = this.directoriesObject[item]
+            try {
+                console.log('selectFolder: ', item)
+                return
+                const isFile = this.filesObject[item] ? true : false
+                const { parentId, id } = this.filesObject[item]
+                console.log('isFile: ', isFile)
+                if (isFile) {
+                    console.log('Download file')
+                    this.download(this.filesObject[item])
+                } else {
+                    // this.currentFolder = this.directoriesObject[item]
+                    // this.currentFolder = this.directoriesObjectById[`${parentId}_${id}`]
+                }
+            } catch (error) {
+                console.log('error: ', error)
             }
         },
         navigateBack() {
@@ -319,7 +236,7 @@ export default {
                 alert('Sorry, an error occured when trying to download file.')
             }
         },
-        async createFolder () {
+        async createFolder() {
             try {
                 await this.$store.dispatch('folders/createFolder', { path: '/new folder/new folder2' })
                 alert('Folder created successfully!')
@@ -327,7 +244,7 @@ export default {
                 console.log('error: ', error)
             }
         },
-        async deleteFolder () {
+        async deleteFolder() {
             try {
                 await this.$store.dispatch('folders/deleteFolder', { path: '/new folder/new folder3' })
                 alert('Folder deleted successfully!')
@@ -336,7 +253,7 @@ export default {
                 console.log('error.response: ', error.response)
                 console.log('error.response.data: ', error.response.data)
             }
-        }
+        },
     },
 }
 </script>
