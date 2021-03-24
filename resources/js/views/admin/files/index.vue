@@ -13,6 +13,8 @@
         currentFolder: {{ currentFolder }}<br />
         opened: {{ opened }}<br />
         difference: {{ difference }}<br />
+        <!-- results: {{ results }}<br /> -->
+
         <v-row no-gutters>
             <v-col cols="4" style="border: 1px solid orange">
                 <v-treeview shaped hoverable open-on-click return-object :items="items2" item-key="name" @update:open="updateOpen">
@@ -26,41 +28,51 @@
                     </template>
                 </v-treeview>
             </v-col>
-            <v-col cols="8" style="border: 1px solid purple">
+            <v-col :cols="drawer ? 8 : 8" style="border: 1px solid purple">
                 currentFolder: {{ currentFolder }}<br />
                 <span v-if="currentFolder">Content of {{ currentFolder['name'] }}:</span>
                 <span v-else>Content of root</span><br />
                 <v-btn small @click="navigateBack" v-if="currentFolder">&larr; Back</v-btn>
                 <v-btn small @click="createFolder">Create folder</v-btn>
                 <v-btn small @click="deleteFolder">Delete folder</v-btn>
-                <v-row no-gutters class="item" v-if="currentFolder">
-                    <v-col cols="2" style="border: 1px solid red; margin: 10px" v-for="(item, index) in currentFolder.children" :key="index" @click="selectFolder(item)">
-                        <div class="text-center" v-if="!item.file" @click="selectFolder(item)">
+                <v-row no-gutters class="item2" v-if="currentFolder">
+                    <v-col cols="2" class="item" style="border: 1px dashed red; margin: 10px" v-for="(item, index) in currentFolder.children" :key="index">
+                        <div class="text-center" v-if="!item.file" @click="oneClick(item)">
                             <v-icon x-large>mdi-folder</v-icon><br />
                             <small>{{ item.name }}</small>
                         </div>
-                        <div class="text-center" @click="download(item)" v-else>
+                        <div class="text-center" @click="oneClick(item)" v-else>
                             <v-icon x-large>mdi-file-pdf</v-icon><br />
                             <small>{{ item.name }}</small>
                         </div>
                     </v-col>
                 </v-row>
-                <v-row no-gutters class="item" v-else>
-                    <v-col cols="2" style="border: 1px dashed blue; margin: 10px" v-for="(item, index) in rootFolder" :key="index">
-                        <div class="text-center" v-if="!item.file" @click="selectFolder(item)">
+                <v-row no-gutters class="item2" v-else>
+                    <v-col cols="2" class="item" style="border: 1px dashed blue; margin: 10px" v-for="(item, index) in rootFolder" :key="index">
+                        <div class="text-center" v-if="!item.file" @click="oneClick(item)">
                             <v-icon x-large>mdi-folder</v-icon><br />
                             <small>{{ item.name }}</small>
                         </div>
-                        <div class="text-center" @click="download(item)" v-else>
+                        <div class="text-center" @click="oneClick(item)" v-else>
                             <v-icon x-large>mdi-file-pdf</v-icon><br />
                             <small>{{ item.name }}</small>
                         </div>
                     </v-col>
                 </v-row>
+                <!-- <img src="/images/1920x1080.jpg" width="200" /> -->
+                <!-- <img src="/storage/app/files/1920x1080.jpg" width="200" /> -->
                 <!-- <div class="item" v-if="currentFolder">
                     <div style="border: 1px solid red; margin: 10px" v-for="(item, index) in currentFolder" :key="index" @click="selectFolder(item)">{{ item }}</div>
                 </div> -->
             </v-col>
+            <!-- <v-col cols="2" v-if="drawer"> -->
+            <!-- Current selected folder -->
+            <v-navigation-drawer v-model="drawer" :absolute="true" :temporary="true" :right="true">
+                <div>
+                    selectedItem: {{ this.selectedItem }}
+                </div>
+            </v-navigation-drawer>
+            <!-- </v-col> -->
         </v-row>
     </div>
 </template>
@@ -106,7 +118,7 @@ export default {
                 name: separator[separator.length - 1],
                 path: this.directories[i],
                 id: this.index,
-                parentId
+                parentId,
                 // length: separator.length,
             })
             this.directoriesObject[this.directories[i]] = {
@@ -115,13 +127,13 @@ export default {
                 id: this.index,
                 parentId,
                 // length: separator.length,
-                children: []
+                children: [],
             }
             path = this.directories[i].substr(0, this.directories[i].lastIndexOf('/'))
             if (path) {
                 // this.directoriesObject[path]['children'].push(separator[separator.length - 1])
                 this.directoriesObject[path]['children'].push({
-                    name: separator[separator.length - 1]
+                    name: separator[separator.length - 1],
                     // file: false
                 })
             }
@@ -140,7 +152,7 @@ export default {
                 id: this.index + 1,
                 parentId,
                 path: this.files[i],
-                file: true
+                file: true,
             })
             this.index++
 
@@ -148,7 +160,7 @@ export default {
                 // this.directoriesObject[path]['children'].push(separator[separator.length - 1])
                 this.directoriesObject[path]['children'].push({
                     name: separator[separator.length - 1],
-                    file: true
+                    file: true,
                 })
             }
         }
@@ -170,7 +182,15 @@ export default {
             items: [],
             opened: [],
             selectedItem: null,
-            difference: null
+            difference: null,
+            drawer: null,
+            items: [
+                { title: 'Home', icon: 'mdi-view-dashboard' },
+                { title: 'About', icon: 'mdi-forum' },
+            ],
+            // results: [],
+            clicks: 0,
+            timer: null,
         }
     },
     computed: {
@@ -181,18 +201,40 @@ export default {
         items2() {
             return this.listToTree(this.directoriesArray)
             // return []
-        }
+        },
     },
     methods: {
+        oneClick(event) {
+            try {
+                console.log('oneClick: ', event)
+                this.clicks++
+                if (this.clicks === 1) {
+                    var self = this
+                    this.timer = setTimeout(function () {
+                        self.selectFolder(event)
+                        self.clicks = 0
+                    }, 300)
+                } else if (event.file) {
+                    this.download(event)
+                    this.clicks = 0
+                } else {
+                    clearTimeout(this.timer)
+                    this.openFolder(event)
+                    this.clicks = 0
+                }
+            } catch (error) {
+                console.log('error: ', error)
+            }
+        },
         updateOpen(items) {
             console.log('updateOpen items: ', items)
             if (items && items.length > 0) {
                 this.currentFolder = this.directoriesObject[items[items.length - 1]['path']]
             }
             if (this.opened.length > 0) {
-                this.difference = this.opened.filter(x => !items.map(item => item.path).includes(x))[0]
+                this.difference = this.opened.filter((x) => !items.map((item) => item.path).includes(x))[0]
             }
-            this.opened = items.map(item => item.path)
+            this.opened = items.map((item) => item.path)
             if (this.difference && this.difference.length > 0) {
                 let parent = this.difference.substr(0, this.difference.lastIndexOf('/'))
                 if (parent) {
@@ -228,6 +270,36 @@ export default {
         selectFolder(item) {
             try {
                 console.log('selectFolder: ', item)
+                this.drawer = true
+                this.selectedItem = item
+                // let path
+                // if (this.currentFolder) {
+                //     path = `${this.currentFolder.path}/${item.name}`
+                // } else {
+                //     path = item.name
+                // }
+                // if (item.file) {
+                //     console.log('Download file!')
+                //     // this.currentFolder = this.directoriesObject[path]
+                //     // path = `${this.currentFolder.path}/${item.name}`
+                //     // console.log('path1: ', path)
+                //     // this.download(path)
+                //     // } else if (this.currentFolder) {
+                //     //     path = `${this.currentFolder}/${item.name}`
+                //     //     this.currentFolder = this.directoriesObject[path]
+                //     //     console.log('path2: ', path)
+                // } else {
+                //     console.log('Move to folder', item.name)
+                //     this.currentFolder = this.directoriesObject[path]
+                // }
+                // console.log('path: ', path)
+            } catch (error) {
+                console.log('error: ', error)
+            }
+        },
+        openFolder(item) {
+            try {
+                console.log('openFolder: ', item)
                 let path
                 if (this.currentFolder) {
                     path = `${this.currentFolder.path}/${item.name}`
@@ -247,38 +319,8 @@ export default {
                 } else {
                     console.log('Move to folder', item.name)
                     this.currentFolder = this.directoriesObject[path]
-                    // path = item.name
-                    // path = `${this.currentFolder.path}/${item.name}`
-                    // this.currentFolder = this.directoriesObject[path]
-                    // console.log('path3: ', path)
                 }
                 console.log('path: ', path)
-                return
-
-                // if (this.currentFolder) {
-                //     path = `${this.currentFolder.name}/${item}`
-                //     if (this.directoriesObject[path]) {
-                //         this.currentFolder = this.directoriesObject[path]
-                //     } else {
-                //         // this.download(path)
-                //     }
-                // } else {
-                //     path = item
-                //     this.currentFolder = this.directoriesObject[path]
-                // }
-                // console.log('path: ', path)
-                // return
-
-                // const isFile = this.filesObject[item] ? true : false
-                // const { parentId, id } = this.filesObject[item]
-                // console.log('isFile: ', isFile)
-                // if (isFile) {
-                //     console.log('Download file')
-                //     this.download(this.filesObject[item])
-                // } else {
-                //     // this.currentFolder = this.directoriesObject[item]
-                //     // this.currentFolder = this.directoriesObjectById[`${parentId}_${id}`]
-                // }
             } catch (error) {
                 console.log('error: ', error)
             }
@@ -288,7 +330,7 @@ export default {
                 if (this.currentFolder.parentId == 0) {
                     this.currentFolder = null
                 } else {
-                    const parentFolder = this.directoriesArray.find(x => x.id == this.currentFolder.parentId)
+                    const parentFolder = this.directoriesArray.find((x) => x.id == this.currentFolder.parentId)
                     console.log('parentFolder: ', parentFolder)
                     this.currentFolder = this.directoriesObject[parentFolder['name']]
                 }
@@ -314,7 +356,7 @@ export default {
                     name: 'new folder2',
                     id: this.index + 1,
                     parentId: 0,
-                    path: '/new folder2'
+                    path: '/new folder2',
                 })
                 alert('Folder created successfully!')
             } catch (error) {
@@ -330,8 +372,8 @@ export default {
                 console.log('error.response: ', error.response)
                 console.log('error.response.data: ', error.response.data)
             }
-        }
-    }
+        },
+    },
 }
 </script>
 
