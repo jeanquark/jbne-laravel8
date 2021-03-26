@@ -37,6 +37,44 @@ export const actions = {
 			return data
         } catch (error) {
             console.log("error: ", error);
+			throw error
+        }
+    },
+	async fetchFileSize({}, payload) {
+		try {
+			const { filePath } = payload
+			console.log('filePath: ', filePath)
+			// const data = await axios.get(`/api/v1/files/size/${filePath}`);
+			// const data = await axios.get(`/api/v1/files/action/getSize?path=${filePath}`);
+			const { data } = await axios.post(`/api/v1/files/size`, { filePath });
+			console.log('data: ', data)
+			return data
+		} catch (error) {
+			console.log('error: ', error)
+			throw error
+		}
+	},
+	async fetchFileLastModified({}, payload) {
+		try {
+			const { filePath } = payload
+			console.log('filePath: ', filePath)
+			// const data = await axios.get(`/api/v1/files/last-modified/${filePath}`);
+			const { data } = await axios.post(`/api/v1/files/last-modified`, { filePath });
+			console.log('data: ', data)
+			return data
+		} catch (error) {
+			console.log('error: ', error)
+			throw error
+		}
+	},
+	async deleteFile({}, payload) {
+        try {
+            const { path } = payload
+			const { data } = await axios.post(`/api/v1/files/destroy`, { path })
+            console.log('[VUEX] data: ', data)
+        } catch (error) {
+            console.log("[VUEX] error: ", error);
+            throw error
         }
     }
 }

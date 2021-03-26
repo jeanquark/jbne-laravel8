@@ -94,8 +94,8 @@ class FoldersController extends Controller
         } else {
             return response()->json([
                 'success'   => false,
-                'message'   => 'Delete error'
+                'message'   => 'Delete folder error'
             ], 500);
-        }  
+        }
     }
 }

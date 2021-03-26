@@ -38,7 +38,15 @@ Route::post('/v1/folders/destroy', [
 ]);
 
 Route::apiResource('/v1/files', App\Http\Controllers\FilesController::class);
-Route::get('/v1/files/{file}', [App\Http\Controllers\FilesController::class, 'show'])->where('file', '.*');
+Route::get('/v1/files/{file}', [App\Http\Controllers\FilesController::class, 'download'])->where('file', '.*');
+// Route::get('/v1/files/action/getsize?path={filePath}', [App\Http\Controllers\FilesController::class, 'getSize'])->where('filePath', '.*');
+Route::post('/v1/files/size', [App\Http\Controllers\FilesController::class, 'getSize']);
+Route::post('/v1/files/last-modified', [App\Http\Controllers\FilesController::class, 'getLastModified']);
+Route::post('/v1/files/destroy', [
+    'as' => 'files.destroy', 
+    'uses' => 'App\Http\Controllers\FilesController@destroy'
+]);
+
 // Route::get('/v1/permanences', [App\Http\Controllers\PermanencesController::class, 'index']);
 // Route::put('/v1/permanences/update', [App\Http\Controllers\PermanencesController::class, 'update']);
 // Route::get('/v1/permanences/{year}/{quarter}', [App\Http\Controllers\PermanencesController::class, 'index']);

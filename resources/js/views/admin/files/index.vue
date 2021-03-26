@@ -68,8 +68,18 @@
             <!-- <v-col cols="2" v-if="drawer"> -->
             <!-- Current selected folder -->
             <v-navigation-drawer v-model="drawer" :absolute="true" :temporary="true" :right="true">
-                <div>
-                    selectedItem: {{ this.selectedItem }}
+                <div style="border: 1px solid red; position: absolute; bottom: 0;" v-if="selectedFile">
+                    File info:<br />
+                    Name: {{ selectedFile.name }}<br />
+                    File: {{ selectedFile.file }}<br />
+                    Size: {{ selectedFile.size }}<br />
+                    Last modified: {{ selectedFile.lastModified }}
+                    <v-btn small color="error" @click="deleteFile">Delete</v-btn>
+                </div>
+                <div style="border: 1px solid red; position: absolute; bottom: 0;" v-if="selectedFolder">
+                    Folder info:<br />
+                    Name: {{ selectedFolder.name }}<br />
+                    <v-btn small color="error" @click="deleteFolder">Delete</v-btn>
                 </div>
             </v-navigation-drawer>
             <!-- </v-col> -->
@@ -182,6 +192,8 @@ export default {
             items: [],
             opened: [],
             selectedItem: null,
+            selectedFile: null,
+            selectedFolder: null,
             difference: null,
             drawer: null,
             items: [
@@ -211,10 +223,15 @@ export default {
                 if (this.clicks === 1) {
                     var self = this
                     this.timer = setTimeout(function () {
-                        self.selectFolder(event)
+                        if (event.file) {
+                            self.selectFile(event)
+                        } else {
+                            self.selectFolder(event)
+                        }
                         self.clicks = 0
                     }, 300)
                 } else if (event.file) {
+                    clearTimeout(this.timer)
                     this.download(event)
                     this.clicks = 0
                 } else {
@@ -267,32 +284,27 @@ export default {
             }
             return roots
         },
-        selectFolder(item) {
+        async selectFolder(folder) {
             try {
-                console.log('selectFolder: ', item)
+                console.log('selectFolder: ', folder)
+                this.selectedFile = null
                 this.drawer = true
-                this.selectedItem = item
-                // let path
-                // if (this.currentFolder) {
-                //     path = `${this.currentFolder.path}/${item.name}`
-                // } else {
-                //     path = item.name
-                // }
-                // if (item.file) {
-                //     console.log('Download file!')
-                //     // this.currentFolder = this.directoriesObject[path]
-                //     // path = `${this.currentFolder.path}/${item.name}`
-                //     // console.log('path1: ', path)
-                //     // this.download(path)
-                //     // } else if (this.currentFolder) {
-                //     //     path = `${this.currentFolder}/${item.name}`
-                //     //     this.currentFolder = this.directoriesObject[path]
-                //     //     console.log('path2: ', path)
-                // } else {
-                //     console.log('Move to folder', item.name)
-                //     this.currentFolder = this.directoriesObject[path]
-                // }
-                // console.log('path: ', path)
+                this.selectedFolder = folder
+            } catch (error) {
+                console.log('error: ', error)
+            }
+        },
+        async selectFile(file) {
+            try {
+                console.log('selectFile: ', file)
+                this.selectedFolder = null
+                this.drawer = true
+                this.selectedFile = file
+                const filePath = encodeURI(`${this.currentFolder ? this.currentFolder.path : ''}/${file.name}`)
+                const size = await this.$store.dispatch('files/fetchFileSize', { filePath })
+                const lastModified = await this.$store.dispatch('files/fetchFileLastModified', { filePath })
+                this.$set(this.selectedFile, 'size', size)
+                this.$set(this.selectedFile, 'lastModified', lastModified)
             } catch (error) {
                 console.log('error: ', error)
             }
@@ -373,6 +385,13 @@ export default {
                 console.log('error.response.data: ', error.response.data)
             }
         },
+        async deleteFile () {
+            try {
+                await this.$store.dispatch('files/deleteFile', { path: '/Webstamps.pdf' })
+            } catch (error) {
+                console.log('error: ', error)
+            }
+        }
     },
 }
 </script>

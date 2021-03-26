@@ -44,9 +44,39 @@ class FilesController extends Controller
      * @param  \App\Models\File  $file
      * @return \Illuminate\Http\Response
      */
-    public function show($filePath)
+    public function download($filePath)
     {
         return Storage::disk('files')->download(urldecode($filePath));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\File  $file
+     * @return \Illuminate\Http\Response
+     */
+    // public function getSize($filePath)
+    public function getSize(Request $request)
+    {
+        $filePath = $request->filePath;
+        return Storage::disk('files')->size(urldecode($filePath));
+        // return Storage::disk('files')->size(urldecode('/images/1920x1080.jpg'));
+
+        // return response()->json([
+        //     'request->filePath' => $request->filePath
+        // ]);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\File  $file
+     * @return \Illuminate\Http\Response
+     */
+    public function getLastModified(Request $request)
+    {
+        $filePath = $request->filePath;
+        return Storage::disk('files')->lastModified(urldecode($filePath));
     }
 
     /**
@@ -67,8 +97,21 @@ class FilesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $path = $request->path;
+        $deleted = Storage::disk('files')->delete($path);
+
+        if ($deleted) {
+            return response()->json([
+                'success'   => true,
+                'message'   => 'Deleted file successfully'
+            ], 200);
+        } else {
+            return response()->json([
+                'success'   => false,
+                'message'   => 'Delete file error'
+            ], 500);
+        }
     }
 }
