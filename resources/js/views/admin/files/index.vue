@@ -13,6 +13,7 @@
         currentFolder: {{ currentFolder }}<br />
         opened: {{ opened }}<br />
         difference: {{ difference }}<br />
+        selectedFolder: {{ selectedFolder }}<br />
         <!-- results: {{ results }}<br /> -->
 
         <v-row no-gutters>
@@ -65,10 +66,9 @@
                     <div style="border: 1px solid red; margin: 10px" v-for="(item, index) in currentFolder" :key="index" @click="selectFolder(item)">{{ item }}</div>
                 </div> -->
             </v-col>
-            <!-- <v-col cols="2" v-if="drawer"> -->
             <!-- Current selected folder -->
-            <v-navigation-drawer v-model="drawer" :absolute="true" :temporary="true" :right="true">
-                <div style="border: 1px solid red; position: absolute; bottom: 0;" v-if="selectedFile">
+            <v-navigation-drawer v-model="drawer" :fixed="true" :temporary="true" :right="true" style="">
+                <div style="border: 1px solid red;" v-if="selectedFile">
                     File info:<br />
                     Name: {{ selectedFile.name }}<br />
                     File: {{ selectedFile.file }}<br />
@@ -76,13 +76,13 @@
                     Last modified: {{ selectedFile.lastModified }}
                     <v-btn small color="error" @click="deleteFile">Delete</v-btn>
                 </div>
-                <div style="border: 1px solid red; position: absolute; bottom: 0;" v-if="selectedFolder">
+                <div style="border: 1px solid red;" v-if="selectedFolder">
                     Folder info:<br />
                     Name: {{ selectedFolder.name }}<br />
                     <v-btn small color="error" @click="deleteFolder">Delete</v-btn>
+                    <v-btn small color="info" @click="renameFolder('new folder name')">Rename</v-btn>
                 </div>
             </v-navigation-drawer>
-            <!-- </v-col> -->
         </v-row>
     </div>
 </template>
@@ -126,14 +126,14 @@ export default {
 
             this.directoriesArray.push({
                 name: separator[separator.length - 1],
-                path: this.directories[i],
+                path: `/${this.directories[i]}`,
                 id: this.index,
                 parentId,
                 // length: separator.length,
             })
             this.directoriesObject[this.directories[i]] = {
                 name: separator[separator.length - 1],
-                path: this.directories[i],
+                path: `/${this.directories[i]}`,
                 id: this.index,
                 parentId,
                 // length: separator.length,
@@ -216,6 +216,28 @@ export default {
         },
     },
     methods: {
+        listToTree(list) {
+            var map = {},
+                node,
+                roots = [],
+                i
+
+            for (i = 0; i < list.length; i += 1) {
+                map[list[i].id] = i // initialize the map
+                list[i].children = [] // initialize the children
+            }
+
+            for (i = 0; i < list.length; i += 1) {
+                node = list[i]
+                if (node.parentId !== 0) {
+                    // if you have dangling branches check that map[node.parentId] exists
+                    list[map[node.parentId]].children.push(node)
+                } else {
+                    roots.push(node)
+                }
+            }
+            return roots
+        },
         oneClick(event) {
             try {
                 console.log('oneClick: ', event)
@@ -262,34 +284,14 @@ export default {
                 this.difference = null
             }
         },
-        listToTree(list) {
-            var map = {},
-                node,
-                roots = [],
-                i
-
-            for (i = 0; i < list.length; i += 1) {
-                map[list[i].id] = i // initialize the map
-                list[i].children = [] // initialize the children
-            }
-
-            for (i = 0; i < list.length; i += 1) {
-                node = list[i]
-                if (node.parentId !== 0) {
-                    // if you have dangling branches check that map[node.parentId] exists
-                    list[map[node.parentId]].children.push(node)
-                } else {
-                    roots.push(node)
-                }
-            }
-            return roots
-        },
+        
         async selectFolder(folder) {
             try {
                 console.log('selectFolder: ', folder)
                 this.selectedFile = null
                 this.drawer = true
-                this.selectedFolder = folder
+                // this.selectedFolder = folder
+                this.selectedFolder = this.directoriesObject[folder.name]
             } catch (error) {
                 console.log('error: ', error)
             }
@@ -375,6 +377,19 @@ export default {
                 console.log('error: ', error)
             }
         },
+        async renameFolder(newName) {
+            try {
+                console.log('renameFolder ', this.selectedFolder, newName)
+                // return
+                await this.$store.dispatch('folders/renameFolder', {
+                    path: this.selectedFolder.path,
+                    newName: 'new folder name'
+                })
+            } catch (error) {
+                console.log('error: ', error)
+                alert('Error renaming folder')
+            }
+        },
         async deleteFolder() {
             try {
                 await this.$store.dispatch('folders/deleteFolder', { path: '/new folder/new folder3' })
@@ -385,13 +400,13 @@ export default {
                 console.log('error.response.data: ', error.response.data)
             }
         },
-        async deleteFile () {
+        async deleteFile() {
             try {
                 await this.$store.dispatch('files/deleteFile', { path: '/Webstamps.pdf' })
             } catch (error) {
                 console.log('error: ', error)
             }
-        }
+        },
     },
 }
 </script>

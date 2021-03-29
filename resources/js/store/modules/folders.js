@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Vue from 'vue'
 
 export const state = () => ({
@@ -37,6 +38,15 @@ export const actions = {
             console.log('[VUEX] data: ', data)
         } catch (error) {
             console.log("[VUEX] error: ", error);
+            throw error
+        }
+    },
+    async renameFolder({}, payload) {
+        try {
+            const { path, newName } = payload
+            const { data } = await axios.put(`/api/v1/folders/${newName}`, { path, newName })
+            console.log('data: ', data)
+        } catch (error) {
             throw error
         }
     },

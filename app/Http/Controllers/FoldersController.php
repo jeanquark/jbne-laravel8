@@ -69,9 +69,26 @@ class FoldersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $newName)
     {
-        //
+        // $path = $request->path;
+        $path = $request->path;
+        $newPath = dirname($path) . "/" . $newName;
+        // rename("/images/old folder name", "/images/new folder name");
+        // $renamed = Storage::disk('files')->rename('/abc/old folder name', '/abc/new folder name');
+        $renamed = Storage::disk('files')->rename($path, $newPath);
+
+        if ($renamed) {
+            return response()->json([
+                'success'   => true,
+                'message'   => 'Renamed folder successfully'
+            ], 200);
+        } else {
+            return response()->json([
+                'success'   => false,
+                'message'   => 'Rename folder error'
+            ], 500);
+        }
     }
 
     /**
